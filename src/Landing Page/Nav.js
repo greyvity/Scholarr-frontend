@@ -3,19 +3,19 @@ import { Link } from "react-router-dom";
 
 const Nav = () => {
   return (
-    <header class="header-landing">
-      <nav class="nav-landing">
-        <div class="logo">
+    <header className="header-landing">
+      <nav className="nav-landing">
+        <div className="logo">
           <Link to="/">
             <h1>{logoSVG}</h1>
           </Link>
         </div>
-        <div class="nav-items">
+        <div className="nav-items">
           <Link to="/login">
-            <li class="nav-item">Login</li>
+            <li className="nav-item">Login</li>
           </Link>
           <Link to="/register">
-            <li class="nav-item">Sign Up</li>
+            <li className="nav-item">Sign Up</li>
           </Link>
         </div>
       </nav>

@@ -110,11 +110,9 @@ const cloudTwoVariants = {
 
 const Weather = () => {
   const [activeVector, setActiveVector] = useState(daySVG);
-  const [time, setTime] = useState(new Date());
-
-  console.log(time.getTime());
 
   const loadVector = () => {
+    const time = new Date();
     if (time.getHours() <= 17) {
       setActiveVector(daySVG);
     } else {

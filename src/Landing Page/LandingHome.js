@@ -3,49 +3,49 @@ import React from "react";
 const LandingHome = () => {
   return (
     <>
-      <main class="main">
+      <main className="main">
         {backgroundSVG}
 
-        <section class="first">
-          <div class="hero">
-            <h1 class="heading">Scholarr heading text</h1>
-            <h1 class="sub-heading">Scholarr sub-heading</h1>
-            <button class="join-now">Join Us</button>
+        <section className="first">
+          <div className="hero">
+            <h1 className="heading">Scholarr heading text</h1>
+            <h1 className="sub-heading">Scholarr sub-heading</h1>
+            <button className="join-now">Join Us</button>
           </div>
-          <div class="img-container"></div>
+          <div className="img-container"></div>
         </section>
 
-        <section class="second">
-          <div class="img-container"></div>
-          <div class="hero hero-second">
-            <h1 class="heading">Scholarr heading text</h1>
-            <h1 class="sub-heading">Scholarr sub-heading</h1>
-            <button class="join-now">Join Us</button>
+        <section className="second">
+          <div className="img-container"></div>
+          <div className="hero hero-second">
+            <h1 className="heading">Scholarr heading text</h1>
+            <h1 className="sub-heading">Scholarr sub-heading</h1>
+            <button className="join-now">Join Us</button>
           </div>
         </section>
-        <section class="features">
-          <div class="feature-card one">
-            <div class="feature-card-img-container"></div>
-            <h3 class="feature-title">Feature 1</h3>
+        <section className="features">
+          <div className="feature-card one">
+            <div className="feature-card-img-container"></div>
+            <h3 className="feature-title">Feature 1</h3>
           </div>
-          <div class="feature-card two">
-            <div class="feature-card-img-container"></div>
-            <h3 class="feature-title">Feature 2</h3>
+          <div className="feature-card two">
+            <div className="feature-card-img-container"></div>
+            <h3 className="feature-title">Feature 2</h3>
           </div>
-          <div class="feature-card three">
-            <div class="feature-card-img-container"></div>
-            <h3 class="feature-title">Feature 3</h3>
+          <div className="feature-card three">
+            <div className="feature-card-img-container"></div>
+            <h3 className="feature-title">Feature 3</h3>
           </div>
-          <div class="feature-text">
-            <h1 class="feature-heading">OUR FEATURES</h1>
-            <h3 class="feature-description">
+          <div className="feature-text">
+            <h1 className="feature-heading">OUR FEATURES</h1>
+            <h3 className="feature-description">
               Find out more about what we are capable of.
             </h3>
           </div>
         </section>
       </main>
 
-      <footer class="footer"></footer>
+      <footer className="footer"></footer>
     </>
   );
 };
@@ -210,8 +210,8 @@ const backgroundSVG = (
       fill="#333333"
     />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M0 3348L27.2 3373.11C52.8 3398.22 107.2 3414.96 160 3414.96C212.8 3414.96 267.2 3364.74 320 3381.48C372.8 3398.22 427.2 3481.93 480 3473.56C532.8 3465.19 587.2 3364.74 640 3373.11C692.8 3381.48 729.7 3448.44 782.5 3473.56C835.3 3498.67 892.2 3428.76 945 3445.5C997.8 3462.24 1067.2 3532.15 1120 3507.04C1172.8 3481.93 1227.2 3414.96 1280 3389.85C1332.8 3364.74 1387.2 3465.19 1440 3507.04C1492.8 3548.89 1564.7 3465.49 1617.5 3465.49C1670.3 3465.49 1707.2 3548.89 1760 3532.15C1812.8 3515.41 1867.2 3465.19 1892.8 3440.07L1920 3414.96V3800H1892.8C1867.2 3800 1812.8 3800 1760 3800C1707.2 3800 1652.8 3800 1600 3800C1547.2 3800 1492.8 3800 1440 3800C1387.2 3800 1332.8 3800 1280 3800C1227.2 3800 1172.8 3800 1120 3800C1067.2 3800 1012.8 3800 960 3800C907.2 3800 852.8 3800 800 3800C747.2 3800 692.8 3800 640 3800C587.2 3800 532.8 3800 480 3800C427.2 3800 372.8 3800 320 3800C267.2 3800 212.8 3800 160 3800C107.2 3800 52.8 3800 27.2 3800H0V3348Z"
       fill="#2E2B55"
     />

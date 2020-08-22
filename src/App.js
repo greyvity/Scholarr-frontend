@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import User from "./User/User";
 import LandingPage from "./Landing Page/LandingPage";
-import Login from "./Landing Page/Auth/Login";
-import Register from "./Landing Page/Auth/Register";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import Modal from "./Modal";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -21,13 +19,12 @@ function App() {
     if (temp) {
       setIsLoggedIn(temp);
     }
-  });
+  }, [isLoggedIn]);
 
   return (
     <>
       <Router>
         <Modal showModal={showModal} />
-
         <Route
           render={({ location }) => (
             <AnimatePresence
