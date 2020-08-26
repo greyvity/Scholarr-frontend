@@ -1,8 +1,9 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const About = () => {
   return (
-    <>
+    <motion.div className="about-us" exit={{ y: 1000 }}>
       <div className="aboutcontainer">
         <h1>About Us</h1>
         <h2>Members</h2>
@@ -51,7 +52,7 @@ const About = () => {
         </ul>
         &copy; 2020 scholarr.com. All Rights Reserved.
       </div>
-    </>
+    </motion.div>
   );
 };
 

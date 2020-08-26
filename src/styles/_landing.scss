@@ -37,6 +37,15 @@
       background-color: #2e2b55;
       border-radius: 10px;
       margin-left: 30px;
+      transition: all 400ms ease;
+
+      &:hover {
+        // filter: contrast(0.9);
+        color: #2e2b55;
+        background: white;
+        border: 3px solid #2e2b55;
+        // box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+      }
     }
   }
 }
@@ -69,17 +78,103 @@
 }
 
 .auth {
+  margin-top: 5vh;
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  background-color: #ffffff;
+
   label {
-    font-size: 20px;
+    background-color: white;
+    height: 80%;
+    width: 15%;
+    border-radius: 10px 0px 0px 10px;
+    display: flex;
+    justify-content: center;
   }
 
   input {
     font-size: 25px;
   }
+}
+
+.auth-form {
+  border-radius: 10px;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.25);
+  width: 50%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #ffffff;
+  // flex-wrap: wrap;
+}
+
+.input-container {
+  min-width: 400px;
+  height: 14%;
+  max-width: 50%;
+  width: 30%;
+  display: flex;
+  margin: 10px 60px;
+  justify-content: flex-start;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 10px;
+  transition: all 150ms ease;
+
+  &:focus-within {
+    border: 5px solid black;
+  }
+}
+
+.input {
+  border: 0;
+  height: 100%;
+  width: 80%;
+  background: transparent;
+}
+
+.auth-form-submit {
+  margin-top: 30px;
+  width: 15%;
+  height: 10%;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #2e2b55;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Nunito", sans-serif;
+  cursor: pointer;
+  transition: all 400ms ease;
+
+  // &:hover {
+  //   // filter: contrast(0.9);
+  //   color: #2e2b55;
+  //   background: white;
+  //   border: 3px solid #2e2b55;
+  //   // box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  // }
+}
+
+.input:focus,
+.input:visited,
+.input:active,
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  background-color: white !important;
+  outline: none;
+  border: 0;
+}
+
+.error-message {
+  color: #ff5353;
+  font-size: calc(1em + 0.2vw);
 }

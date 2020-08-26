@@ -1,16 +1,17 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const LandingHome = () => {
   return (
     <>
-      <main className="main">
+      <motion.main exit={{ x: 1000 }} className="main">
         {backgroundSVG}
 
         <section className="first">
           <div className="hero">
             <h1 className="heading">Scholarr heading text</h1>
-            <h1 className="sub-heading">Scholarr sub-heading</h1>
-            <button className="join-now">Join Us</button>
+            <div className="sub-heading">Scholarr sub-heading</div>
+            <div className="join-now">Join Us</div>
           </div>
           <div className="img-container"></div>
         </section>
@@ -43,9 +44,9 @@ const LandingHome = () => {
             </h3>
           </div>
         </section>
-      </main>
+      </motion.main>
 
-      <footer className="footer"></footer>
+      {/* <footer className="footer"></footer> */}
     </>
   );
 };

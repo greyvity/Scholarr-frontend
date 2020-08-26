@@ -123,7 +123,7 @@ const Weather = () => {
 
   useEffect(() => {
     loadVector();
-  });
+  }, []);
 
   return (
     <div className="welcome-section">
