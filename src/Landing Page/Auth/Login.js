@@ -8,6 +8,7 @@ const Login = ({
   setToken,
   setShowModal,
   location,
+  setUser,
 }) => {
   const [error, setError] = useState({});
 
@@ -58,11 +59,13 @@ const Login = ({
         setTimeout(() => {
           setError({});
         }, 4000);
-      } else if (jsonResponse.success ) {
+      } else if (jsonResponse.success) {
         // setShowModal(true);
         setIsLoggedIn(true);
         setToken(jsonResponse.success["auth_token"]);
+        setUser(jsonResponse.success.user);
 
+        localStorage.setItem("user", JSON.stringify(jsonResponse.success.user));
         localStorage.setItem("authToken", jsonResponse.success["auth_token"]);
         localStorage.setItem("isLoggedIn", true);
       }

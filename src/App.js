@@ -25,11 +25,13 @@ import {
 } from "react-router-dom";
 import "./styles/style.css";
 import { useEffect } from "react";
+import ClassroomExtended from "./User/Components/Classroom/ClassroomExtended";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({});
 
@@ -37,10 +39,12 @@ function App() {
     // localStorage.setItem(isLoggedIn, false);
     // localStorage.clear();
     const temp = JSON.parse(localStorage.getItem("isLoggedIn"));
+    const tempUser = JSON.parse(localStorage.getItem("user"));
     const authToken = localStorage.getItem("authToken");
-    if (temp && authToken) {
+    if (temp && authToken && tempUser) {
       setIsLoggedIn(true);
       setToken(authToken);
+      setUser(tempUser);
     }
   }, []);
 
@@ -51,7 +55,7 @@ function App() {
         <Modal showModal={showModal} />
         {isLoggedIn ? (
           <main className="container">
-            <Nav setIsLoggedIn={setIsLoggedIn} />
+            <Nav setIsLoggedIn={setIsLoggedIn} user={user} setUser={setUser} />
             <Sidebar />
             <Weather />
             <Route
@@ -69,7 +73,15 @@ function App() {
                     <Route
                       path="/"
                       exact
-                      render={(props) => <Classroom token={token} />}
+                      render={(props) => (
+                        <Classroom token={token} user={user} />
+                      )}
+                    />
+                    <Route
+                      path="/class/:classId"
+                      render={(props) => (
+                        <ClassroomExtended token={token} {...props} />
+                      )}
                     />
                     <Route path="/calendar" render={(props) => <Calendar />} />
                     <Route path="/todo" render={(props) => <Todo />} />
@@ -101,6 +113,7 @@ function App() {
                       render={(props) => (
                         <Login
                           token={token}
+                          setUser={setUser}
                           error={error}
                           setError={setError}
                           setToken={setToken}

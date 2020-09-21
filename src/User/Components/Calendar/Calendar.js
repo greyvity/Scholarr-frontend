@@ -8,14 +8,6 @@ const Calendar = () => {
   const [events, setEvents] = useState([]);
   const [isSignedIn, setIsSignedIn] = useState(false);
 
-  // const CLIENT_ID =
-  //   "317176554919-tdsdl3fdeejkbtihpaqkvtqr0lbsap46.apps.googleusercontent.com";
-  // const API_KEY = "AIzaSyBFTWjs_GRL5tXG_k3WqPSPm76hUQ5Yr7E";
-  // const SCOPES =
-  //   "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events";
-  // const DISCOVERY_DOCS = [
-  //   "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
-  // ];
   const CLIENT_ID =
     "449634065841-hchrinrngi2fl26jsnggvoc3qbqg5pe1.apps.googleusercontent.com";
   const API_KEY = "AIzaSyBH49rpYqpE44Cm5DB1RuMg5pONdz6NoOo";
