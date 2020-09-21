@@ -28,7 +28,7 @@ import { useEffect } from "react";
 import ClassroomExtended from "./User/Components/Classroom/ClassroomExtended";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [token, setToken] = useState(null);
   const [user, setUser] = useState({});
@@ -57,7 +57,6 @@ function App() {
           <main className="container">
             <Nav setIsLoggedIn={setIsLoggedIn} user={user} setUser={setUser} />
             <Sidebar />
-            <Weather />
             <Route
               render={({ location }) => (
                 <AnimatePresence
