@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import About from "./Layout/About";
 import Weather from "./Layout/Weather";
-import Home from "./User/Components/Home";
+// import Home from "./User/Components/Home";
 import Nav from "./Layout/Nav";
 import Loader from "./Loader";
 import Sidebar from "./Layout/Sidebar";
-import Classroom from "./User/Components/Classroom";
-import Dashboard from "./User/Components/Dashboard";
+import Classroom from "./User/Components/Classroom/Classroom";
+import Dashboard from "./User/Components/Dashboard/Dashboard";
 import Login from "./Landing Page/Auth/Login";
 import LandingHome from "./Landing Page/LandingHome";
 import LandingNav from "./Landing Page/LandingNav";
 // import About from "../Layout/About";
-import Calendar from "./User/Components/Calendar";
-import Todo from "./User/Components/Todo";
+import Calendar from "./User/Components/Calendar/Calendar";
+import Todo from "./User/Components/ToDo/Todo";
 import Register from "./Landing Page/Auth/Register";
 import { AnimatePresence } from "framer-motion";
 import Modal from "./Modal";
@@ -37,12 +37,12 @@ function App() {
     // localStorage.setItem(isLoggedIn, false);
     // localStorage.clear();
     const temp = JSON.parse(localStorage.getItem("isLoggedIn"));
-    console.log(temp);
-    console.log(isLoggedIn);
-    if (temp) {
-      setIsLoggedIn(temp);
+    const authToken = localStorage.getItem("authToken");
+    if (temp && authToken) {
+      setIsLoggedIn(true);
+      setToken(authToken);
     }
-  }, [isLoggedIn]);
+  }, []);
 
   return (
     <>
@@ -63,12 +63,13 @@ function App() {
                   }}
                 >
                   <Switch location={location} key={location.pathname}>
-                    <Route path="/" exact render={(props) => <Home />} />
+                    {/* <Route path="/" exact render={(props) => <Home />} /> */}
 
                     <Route path="/about" render={(props) => <About />} />
                     <Route
-                      path="/classroom"
-                      render={(props) => <Classroom />}
+                      path="/"
+                      exact
+                      render={(props) => <Classroom token={token} />}
                     />
                     <Route path="/calendar" render={(props) => <Calendar />} />
                     <Route path="/todo" render={(props) => <Todo />} />

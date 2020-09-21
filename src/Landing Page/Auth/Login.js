@@ -58,9 +58,12 @@ const Login = ({
         setTimeout(() => {
           setError({});
         }, 4000);
-      } else if (jsonResponse.status === "success") {
+      } else if (jsonResponse.success ) {
         // setShowModal(true);
         setIsLoggedIn(true);
+        setToken(jsonResponse.success["auth_token"]);
+
+        localStorage.setItem("authToken", jsonResponse.success["auth_token"]);
         localStorage.setItem("isLoggedIn", true);
       }
     } catch (error) {

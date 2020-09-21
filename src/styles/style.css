@@ -52,7 +52,6 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  text-align: center;
   color: white;
   background-color: #2e2b55;
   border-radius: 10px;
@@ -222,6 +221,7 @@ input:-webkit-autofill:active {
 * {
   padding: 0;
   margin: 0;
+  border: none;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
@@ -314,6 +314,8 @@ a {
           align-items: flex-end;
   font-weight: bolder;
   font-family: "Nunito", sans-serif;
+  min-width: 500px;
+  margin-right: 50px;
 }
 
 .nav {
@@ -351,6 +353,8 @@ a {
   -ms-grid-row-span: 2;
   -ms-grid-column: 1;
   grid-area: sidebar;
+  min-width: 250px;
+  max-width: 250px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -609,5 +613,161 @@ a {
 
 p {
   font-size: small;
+}
+
+/* Classroom Styles */
+.classroom-container {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 2;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 3;
+  grid-area: main;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  max-width: 90%;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.classrooms {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.classroom {
+  font-size: calc(0.6em + 0.3vw);
+  padding: 20px;
+  min-width: 200px;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  background-color: #4f4f4f;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  color: white;
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+
+.classroom .actions {
+  opacity: 0;
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+
+.classroom:hover .actions {
+  opacity: 1;
+}
+
+.create-classroom {
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  overflow: hidden;
+}
+
+.open-close-form {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.open-close-form h3 {
+  font-size: calc(0.5em + 0.7vw);
+}
+
+.create-classroom-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 80%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.input-fields {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-width: 200px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.input-fields label {
+  font-size: calc(0.5em + 0.5vw);
+  font-weight: bold;
+}
+
+.input-fields input {
+  border-radius: 5px;
+  width: 100%;
+  height: 30px;
+  padding: 0 5px;
+  font-family: "Nunito", sans-serif;
+}
+
+.create-classroom-submit {
+  min-width: 100px;
+  background-color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  height: 30px;
+  font-size: calc(0.5em + 0.5vw);
 }
 /*# sourceMappingURL=style.css.map */
