@@ -41,6 +41,7 @@ const Calendar = () => {
           gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
           // Handle the initial sign-in state.
+          // console.log(gapi.auth2.getAuthInstance().isSignedIn.get());
           updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
         },
         function (error) {
@@ -58,7 +59,8 @@ const Calendar = () => {
       // authorizeButton.style.display = "none";
       // signoutButton.style.display = "block";
       listUpcomingEvents();
-      setIsSignedIn(true);
+      setIsSignedIn(false);
+      handleAuthClick();
     } else {
       handleAuthClick();
     }
@@ -76,7 +78,7 @@ const Calendar = () => {
    *  Sign out the user upon button click.
    */
   function handleSignoutClick(event) {
-    gapi.auth2.getAuthInstance().signOut();
+    // gapi.auth2.getAuthInstance().signOut();
     setIsSignedIn(false);
     setEvents([]);
   }
