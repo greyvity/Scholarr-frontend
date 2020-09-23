@@ -12,6 +12,9 @@ import LandingHome from "./Landing Page/LandingHome";
 import LandingNav from "./Landing Page/LandingNav";
 // import About from "../Layout/About";
 import Calendar from "./User/Components/Calendar/Calendar";
+import CreateTodo from "./User/Components/ToDo/CreateTodo";
+import EditTodo from "./User/Components/ToDo/EditTodo";
+import TodoList from "./User/Components/ToDo/TodoList";
 import Todo from "./User/Components/ToDo/Todo";
 import Register from "./Landing Page/Auth/Register";
 import { AnimatePresence } from "framer-motion";
@@ -28,7 +31,7 @@ import { useEffect } from "react";
 import ClassroomExtended from "./User/Components/Classroom/ClassroomExtended";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [token, setToken] = useState(null);
   const [user, setUser] = useState({});
@@ -52,7 +55,9 @@ function App() {
     <>
       <Router>
         {isLoading && <Loader setIsLoading={setIsLoading} />}
+
         <Modal showModal={showModal} />
+        {/* <ClassworkModal showClassworkModal={showClassworkModal} /> */}
         {isLoggedIn ? (
           <main className="container">
             <Nav setIsLoggedIn={setIsLoggedIn} user={user} setUser={setUser} />
@@ -79,15 +84,21 @@ function App() {
                     <Route
                       path="/class/:classId"
                       render={(props) => (
-                        <ClassroomExtended token={token} {...props} />
+                        <ClassroomExtended
+                          token={token}
+                          {...props}
+                          user={user}
+                        />
                       )}
                     />
                     <Route path="/calendar" render={(props) => <Calendar />} />
-                    <Route path="/todo" render={(props) => <Todo />} />
+                    <Route path="/todo" exact render={(props) => <Todo />} />
                     <Route
                       path="/dashboard"
                       render={(props) => <Dashboard />}
                     />
+                    <Route path="/todo/edit/:id" exact component={EditTodo} />
+                    <Route path="/todo/create" exact component={CreateTodo} />
                     <Redirect to="/" />
                   </Switch>
                 </AnimatePresence>

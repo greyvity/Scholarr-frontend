@@ -11,7 +11,8 @@ const Calendar = () => {
   const CLIENT_ID =
     "449634065841-hchrinrngi2fl26jsnggvoc3qbqg5pe1.apps.googleusercontent.com";
   const API_KEY = "AIzaSyBH49rpYqpE44Cm5DB1RuMg5pONdz6NoOo";
-  const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+  const SCOPES =
+    "https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events";
   const DISCOVERY_DOCS = [
     "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
   ];
@@ -56,11 +57,9 @@ const Calendar = () => {
    */
   function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
-      // authorizeButton.style.display = "none";
-      // signoutButton.style.display = "block";
+      // handleAuthClick();
+      // setIsSignedIn(true);
       listUpcomingEvents();
-      setIsSignedIn(false);
-      handleAuthClick();
     } else {
       handleAuthClick();
     }
@@ -78,7 +77,7 @@ const Calendar = () => {
    *  Sign out the user upon button click.
    */
   function handleSignoutClick(event) {
-    // gapi.auth2.getAuthInstance().signOut();
+    gapi.auth2.getAuthInstance().signOut();
     setIsSignedIn(false);
     setEvents([]);
   }
@@ -189,6 +188,11 @@ const Calendar = () => {
     });
   };
 
+  // useEffect(() => {
+  //   const gapi = wi
+  //   handleClientLoad();
+  // }, [handleClientLoad]);
+
   return (
     <motion.div exit={{ y: 1000 }} className="calendar-container">
       {isSignedIn ? (
@@ -212,7 +216,21 @@ const Calendar = () => {
         <button id="authorize_button" onClick={handleClientLoad}>
           Log In
         </button>
-      )}
+        <button id="add" onClick={addNewEvent}>
+          Add
+        </button>
+        <button id="events" onClick={listUpcomingEvents}>
+          Events
+        </button>
+        <button id="signout_button" onClick={handleSignoutClick}>
+          Sign Out
+        </button>
+      </>
+      {/* ) : ( */}
+      <button id="authorize_button" onClick={handleClientLoad}>
+        Log In
+      </button>
+      {/* )} */}
       {isSignedIn ? (
         events.map((event) => (
           <div id="indivEvents">

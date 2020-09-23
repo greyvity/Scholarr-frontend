@@ -32,12 +32,12 @@ const Sidebar = () => {
           >
             <Link to="/dashboard">
               <div className="quick-toggle dashboard">
-                <i class="fas fa-tachometer-alt"></i>
+                <i className="fas fa-tachometer-alt"></i>
               </div>
             </Link>
             <Link to="/calendar">
               <div className="quick-toggle">
-                <i class="fas fa-calendar-alt"></i>
+                <i className="fas fa-calendar-alt"></i>
               </div>
             </Link>
             <Link to="/todo">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import ClassroomShortened from "./ClassroomShortened";
 
 const Classroom = ({ token, user }) => {
   /** state variables */
@@ -50,6 +50,44 @@ const Classroom = ({ token, user }) => {
     }
   };
 
+  const handleDeleteClass = async (classroom) => {
+    try {
+      if (window.confirm("Are you sure you want to join this class?")) {
+        const classBody = {
+          className: classroom.className,
+          classDescription: classroom.classDescription,
+          classSubject: classroom.classSubject,
+          affiliatedInstitution: classroom.affiliatedInstitution,
+        };
+        console.log(classBody);
+
+        const options = {
+          headers: {
+            "content-type": "application/json",
+            "auth-token": token,
+          },
+          method: "DELETE",
+          // body: JSON.stringify(classBody),
+        };
+
+        const response = await fetch(
+          `/api/classrooms/delete/${classroom._id}`,
+          options
+        );
+        const jsonResponse = await response.json();
+        console.log(jsonResponse);
+        if (jsonResponse.success) {
+          getClassData();
+          window.alert("Class Deleted Successfully");
+        }
+      } else {
+        window.alert("Deletion Cancelled.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getClassData = useCallback(async () => {
     try {
       const options = {
@@ -61,12 +99,50 @@ const Classroom = ({ token, user }) => {
       const response = await fetch(`/api/classrooms/user/${user._id}`, options);
       const jsonResponse = await response.json();
       console.log(jsonResponse);
+      if (!response.ok) throw jsonResponse.error;
       setAttendingClassrooms(jsonResponse.classesAttending);
       setTeachingClassrooms(jsonResponse.classesTeaching);
     } catch (error) {
       console.log(error);
+      window.alert(error.message);
     }
   }, [token, user._id]);
+
+  const handleJoinClass = async (e) => {
+    try {
+      e.preventDefault();
+      if (window.confirm("Are you sure you want to join this class?")) {
+        const classAttributes = {
+          classCode: e.target.classCode.value,
+        };
+        console.log(classAttributes);
+
+        const options = {
+          headers: {
+            "content-type": "application/json",
+            "auth-token": token,
+          },
+          method: "POST",
+          body: JSON.stringify(classAttributes),
+        };
+        const response = await fetch("/api/classrooms/request", options);
+        const jsonResponse = await response.json();
+        console.log(jsonResponse);
+        if (jsonResponse.Success) {
+          setIsJoining(false);
+          window.alert(
+            "You will be able to view your class once your teacher accepts your request"
+          );
+          getClassData();
+        }
+      } else {
+        window.alert("Invite cancelled by sender.");
+        e.target.classCode.value = "";
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     console.log("firing");
@@ -122,16 +198,11 @@ const Classroom = ({ token, user }) => {
                 key={classroom._id}
                 // className="classroom"
               >
-                <Link to={`class/${classroom._id}`}>
-                  <div className="classroom">
-                    <h1>{classroom.className}</h1>
-                    <div className="actions">
-                      <button className="delete-action">
-                        <i className="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </div>
-                </Link>
+                <ClassroomShortened
+                  isTeaching={true}
+                  classroom={classroom}
+                  handleDeleteClass={handleDeleteClass}
+                ></ClassroomShortened>
               </motion.div>
             ))}
 
@@ -226,6 +297,7 @@ const Classroom = ({ token, user }) => {
                         type="text"
                         id="class-name"
                         name="className"
+                        placeholder="Class Name"
                         className="class-name"
                       />
                     </div>
@@ -236,6 +308,7 @@ const Classroom = ({ token, user }) => {
                         type="text"
                         id="class-description"
                         name="classDescription"
+                        placeholder="Class Description"
                         className="class-description"
                       />
                     </div>
@@ -246,6 +319,7 @@ const Classroom = ({ token, user }) => {
                         type="text"
                         id="subject"
                         name="subject"
+                        placeholder="Subject"
                         className="subject"
                       />
                     </div>
@@ -255,6 +329,7 @@ const Classroom = ({ token, user }) => {
                         type="text"
                         id="affiliation"
                         name="affiliation"
+                        placeholder="Affiliation"
                         className="affiliation"
                       />
                     </div>
@@ -285,19 +360,13 @@ const Classroom = ({ token, user }) => {
             {attendingClassrooms?.map((classroom) => (
               <motion.div
                 variants={childVariants}
-                key={classroom._id}
+                key={classroom._classId}
                 // className="classroom"
               >
-                <Link to={`/${classroom._classId}`}>
-                  <div className="classroom">
-                    <h1>{classroom.className}</h1>
-                    <div className="actions">
-                      <button className="delete-action">
-                        <i className="fa-fas-trash"></i>
-                      </button>
-                    </div>
-                  </div>
-                </Link>
+                <ClassroomShortened
+                  classroom={classroom}
+                  isTeaching={false}
+                ></ClassroomShortened>
               </motion.div>
             ))}
 
@@ -381,7 +450,7 @@ const Classroom = ({ token, user }) => {
                     animate={{ opacity: 1, y: 0, transition: { delay: 0.3 } }}
                     exit={{ opacity: 0, y: 100 }}
                     action="#"
-                    onSubmit={handleSubmitClass}
+                    onSubmit={handleJoinClass}
                     className="create-classroom-form"
                   >
                     <div className="name-input input-fields">
@@ -391,6 +460,7 @@ const Classroom = ({ token, user }) => {
                         type="text"
                         id="class-code"
                         name="classCode"
+                        placeholder="code"
                         className="class-code"
                       />
                     </div>

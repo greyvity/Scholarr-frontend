@@ -1,1 +1,30 @@
 /* Todo Styles */
+
+.todo-container {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 80%;
+  margin: 100px auto 0 auto;
+}
+
+.todo-nav-container {
+  background-color: rgb(136, 136, 136);
+  width: 100%;
+  max-height: 8vh;
+  min-height: 8vh;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+
+  .todo-nav {
+    display: flex;
+
+    li {
+      margin-right: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+}
