@@ -80,6 +80,7 @@ const ClassworkModal = ({
       }
     } catch (err) {
       console.log(err);
+      window.alert(err);
     }
   };
 

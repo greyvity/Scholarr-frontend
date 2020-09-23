@@ -73,6 +73,7 @@ const InvitesModal = ({
       setPendingUsers(tempCollection);
     } catch (error) {
       console.log(error);
+      window.alert(error);
     }
   }, [token, classDetails]);
 
@@ -101,7 +102,7 @@ const InvitesModal = ({
                       className="accept-icon"
                       onClick={(e) => handleAcceptInvite(e, pendingUser.id)}
                     >
-                      ✔accept
+                      ✔
                     </h4>
                   </div>
                 ))}

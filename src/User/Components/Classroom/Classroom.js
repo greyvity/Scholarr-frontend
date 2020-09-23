@@ -99,10 +99,12 @@ const Classroom = ({ token, user }) => {
       const response = await fetch(`/api/classrooms/user/${user._id}`, options);
       const jsonResponse = await response.json();
       console.log(jsonResponse);
+      if (!response.ok) throw jsonResponse.error;
       setAttendingClassrooms(jsonResponse.classesAttending);
       setTeachingClassrooms(jsonResponse.classesTeaching);
     } catch (error) {
       console.log(error);
+      window.alert(error.message);
     }
   }, [token, user._id]);
 

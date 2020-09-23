@@ -12,6 +12,9 @@ import LandingHome from "./Landing Page/LandingHome";
 import LandingNav from "./Landing Page/LandingNav";
 // import About from "../Layout/About";
 import Calendar from "./User/Components/Calendar/Calendar";
+import CreateTodo from "./User/Components/ToDo/CreateTodo";
+import EditTodo from "./User/Components/ToDo/EditTodo";
+import TodoList from "./User/Components/ToDo/TodoList";
 import Todo from "./User/Components/ToDo/Todo";
 import Register from "./Landing Page/Auth/Register";
 import { AnimatePresence } from "framer-motion";
@@ -89,11 +92,13 @@ function App() {
                       )}
                     />
                     <Route path="/calendar" render={(props) => <Calendar />} />
-                    <Route path="/todo" render={(props) => <Todo />} />
+                    <Route path="/todo" exact render={(props) => <Todo />} />
                     <Route
                       path="/dashboard"
                       render={(props) => <Dashboard />}
                     />
+                    <Route path="/todo/edit/:id" exact component={EditTodo} />
+                    <Route path="/todo/create" exact component={CreateTodo} />
                     <Redirect to="/" />
                   </Switch>
                 </AnimatePresence>

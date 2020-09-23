@@ -44,6 +44,7 @@ const ClassroomExtended = ({ token, match, user, location }) => {
       setClassworks(jsonClassworkResponse.success.classworks);
     } catch (error) {
       console.log(error);
+      window.alert(error);
     }
   }, [token, match.params.classId]);
 
