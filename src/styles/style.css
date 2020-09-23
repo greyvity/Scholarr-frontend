@@ -219,6 +219,105 @@ input:-webkit-autofill:active {
 }
 
 /* Calendar Styles */
+.calendar-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding-bottom: 30px;
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  grid-column-end: 4;
+  margin: 50px 0px 10px 0px;
+}
+
+#calendarbuttons {
+  padding: 0px 0px 25px 0px;
+  margin: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-bottom: 2px solid #7a87ff;
+}
+
+#calendarbuttons button {
+  background-color: white;
+  font-family: cursive;
+  font-size: medium;
+  font-weight: bold;
+}
+
+#calendarbuttons button:hover {
+  color: #7a87ff;
+}
+
+#indivEvents {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: auto;
+  line-height: 290%;
+  font-family: cursive;
+  font-size: small;
+}
+
+#delete {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+#add {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+#events {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+#signout_button {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+#authorize_button {
+  background-color: white;
+  font-size: large;
+  font-weight: bold;
+  font-family: cursive;
+  margin: auto;
+}
+
+#authorize_button:hover {
+  color: #7a87ff;
+}
+
+.upcomingEvents {
+  font-weight: lighter;
+  font-size: small;
+  margin: auto;
+  color: gray;
+}
+
+.fas {
+  margin: 10px;
+}
+
 /* Todo Styles */
 * {
   padding: 0;

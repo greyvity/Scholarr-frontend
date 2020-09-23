@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import About from "./Layout/About";
-import Weather from "./Layout/Weather";
+// import Weather from "./Layout/Weather";
 // import Home from "./User/Components/Home";
 import Nav from "./Layout/Nav";
 import Loader from "./Loader";

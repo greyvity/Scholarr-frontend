@@ -193,18 +193,20 @@ const Calendar = () => {
     <motion.div exit={{ y: 1000 }} className="calendar-container">
       {isSignedIn ? (
         <>
-          <button id="delete" onClick={deleteEvent}>
-            Update
-          </button>
-          <button id="add" onClick={addNewEvent}>
-            Add
-          </button>
-          <button id="events" onClick={listUpcomingEvents}>
-            Events
-          </button>
-          <button id="signout_button" onClick={handleSignoutClick}>
-            Sign Out
-          </button>
+          <div id="calendarbuttons">
+            <button id="delete" onClick={deleteEvent}>
+              Update an Event
+            </button>
+            <button id="add" onClick={addNewEvent}>
+              Add an Event
+            </button>
+            <button id="events" onClick={listUpcomingEvents}>
+              List Events
+            </button>
+            <button id="signout_button" onClick={handleSignoutClick}>
+              Sign Out
+            </button>
+          </div>
         </>
       ) : (
         <button id="authorize_button" onClick={handleClientLoad}>
@@ -213,12 +215,14 @@ const Calendar = () => {
       )}
       {isSignedIn ? (
         events.map((event) => (
-          <Events
-            key={event.id}
-            event={event}
-            deleteEvent={deleteEvent}
-            updateEvent={updateEvent}
-          />
+          <div id="indivEvents">
+            <Events
+              key={event.id}
+              event={event}
+              deleteEvent={deleteEvent}
+              updateEvent={updateEvent}
+            />
+          </div>
         ))
       ) : (
         <h1 className="upcomingEvents">Please Log in to view Events</h1>

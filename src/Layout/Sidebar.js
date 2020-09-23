@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import Dashboard from "../styles/assets/vectors/Dashboard.svg";
+// import Dashboard from "../styles/assets/vectors/Dashboard.svg";
 // import Todo from "../styles/assets/vectors/Todo.svg";
 // import Calendar from "../styles/assets/vectors/Calendar.svg";
 
