@@ -663,9 +663,6 @@ p {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
@@ -674,7 +671,7 @@ p {
       -ms-flex-direction: column;
           flex-direction: column;
   width: 92%;
-  margin: 0 auto;
+  margin: 50px auto 0 auto;
   min-height: 100vh;
 }
 
@@ -725,10 +722,14 @@ p {
 }
 
 .classroom .actions {
-  color: white;
   opacity: 0;
   -webkit-transition: all 300ms ease;
   transition: all 300ms ease;
+  background: transparent;
+}
+
+.classroom .actions i {
+  color: white;
 }
 
 .classroom:hover .actions {
@@ -816,11 +817,225 @@ p {
 
 /* class detail view styles */
 .inner-container {
+  width: 60%;
+  margin: 0 auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.class-information {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 150px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background: #bdbdbd;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  padding: 10px 20px;
+}
+
+.class-information .class-code-header {
+  text-align: right;
+  width: 100%;
+  cursor: pointer;
+}
+
+.class-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  width: 100%;
+}
+
+.add-assignments-button {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 60px;
+  padding: 20px;
+}
+
+.add-assignments-button svg {
+  margin-right: 10px;
+}
+
+.classworks-list {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 20px;
+}
+
+.classworks-list .classwork-list {
+  min-height: 150px;
+  margin: 10px 0px;
+  padding: 10px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: #b4b4b4;
+}
+
+.classworks-list .generic {
+  background-color: #b4b4b4;
+}
+
+.classwork-type {
+  text-align: right;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.invites,
+.submissions,
+.add-assignments-button {
+  cursor: pointer;
+}
+
+/** Invite Styles **/
+.display-invites {
+  margin-top: 30px;
+}
+
+.invite-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 20px;
+}
+
+.accept-icon {
+  cursor: pointer;
+}
+
+.modal-heading {
+  font-size: 30px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.create-work {
+  margin-top: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 200px;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  font-size: 20px;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.create-work div {
+  width: 90%;
+  margin: 5px auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.create-work div label {
+  font-weight: bold;
+}
+
+.create-work div input,
+.create-work div textarea {
+  width: 50%;
+  min-width: 200px;
+  max-width: 200px;
+  min-height: 30px;
+  font-size: 20px;
+  padding: 5px 10px;
+  text-align: right;
+}
+
+.create-work div select {
+  width: 50%;
+  font-size: 20px;
+  padding: 5px 10px;
+  text-align: right;
+}
+
+.create-work .submit-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.create-work .add-work-submit {
+  margin-top: 40px;
+  width: 50%;
+  height: 40px;
+  text-align: center;
+  margin: 40px 5px 0 5px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.create-work .cancel {
+  background-color: #5f1818;
+  color: white;
 }
 /*# sourceMappingURL=style.css.map */

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import About from "./Layout/About";
-import Weather from "./Layout/Weather";
+// import Weather from "./Layout/Weather";
 // import Home from "./User/Components/Home";
 import Nav from "./Layout/Nav";
 import Loader from "./Loader";
@@ -28,7 +28,7 @@ import { useEffect } from "react";
 import ClassroomExtended from "./User/Components/Classroom/ClassroomExtended";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [token, setToken] = useState(null);
   const [user, setUser] = useState({});
@@ -52,7 +52,9 @@ function App() {
     <>
       <Router>
         {isLoading && <Loader setIsLoading={setIsLoading} />}
+
         <Modal showModal={showModal} />
+        {/* <ClassworkModal showClassworkModal={showClassworkModal} /> */}
         {isLoggedIn ? (
           <main className="container">
             <Nav setIsLoggedIn={setIsLoggedIn} user={user} setUser={setUser} />
@@ -79,7 +81,11 @@ function App() {
                     <Route
                       path="/class/:classId"
                       render={(props) => (
-                        <ClassroomExtended token={token} {...props} />
+                        <ClassroomExtended
+                          token={token}
+                          {...props}
+                          user={user}
+                        />
                       )}
                     />
                     <Route path="/calendar" render={(props) => <Calendar />} />

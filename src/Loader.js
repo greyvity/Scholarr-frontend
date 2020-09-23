@@ -5,7 +5,7 @@ const Loader = () => {
     <div
       style={{
         height: "100vh",
-        backgroundColor: "black",
+        backgroundColor: "rgba(120,12,34,0.5)",
         position: "absolute",
         top: 0,
       }}
