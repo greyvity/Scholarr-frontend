@@ -17,6 +17,7 @@ import EditTodo from "./User/Components/ToDo/EditTodo";
 import TodoList from "./User/Components/ToDo/TodoList";
 import Todo from "./User/Components/ToDo/Todo";
 import Register from "./Landing Page/Auth/Register";
+import Profile from "./User/Components/Profile/Profile";
 import { AnimatePresence } from "framer-motion";
 import Modal from "./Modal";
 
@@ -92,14 +93,41 @@ function App() {
                       )}
                     />
                     <Route path="/calendar" render={(props) => <Calendar />} />
-                    <Route path="/todo" exact render={(props) => <Todo />} />
+                    <Route
+                      path="/todo"
+                      exact
+                      render={(props) => <Todo user={user} token={token} />}
+                    />
                     <Route
                       path="/dashboard"
                       render={(props) => <Dashboard />}
                     />
-                    <Route path="/todo/edit/:id" exact component={EditTodo} />
-                    <Route path="/todo/create" exact component={CreateTodo} />
-                    <Redirect to="/" />
+                    <Route
+                      path="/todo/create"
+                      exact
+                      render={(props) => (
+                        <CreateTodo {...props} token={token} user={user} />
+                      )}
+                    />
+                    <Route
+                      path="/todo/edit/:todoId"
+                      exact
+                      render={(props) => (
+                        <EditTodo {...props} token={token} user={user} />
+                      )}
+                    />
+                    <Route
+                      path="/profile"
+                      render={(props) => (
+                        <Profile
+                          {...props}
+                          token={token}
+                          user={user}
+                          setUser={setUser}
+                        />
+                      )}
+                    />
+                    {/* <Redirect to="/" /> */}
                   </Switch>
                 </AnimatePresence>
               )}

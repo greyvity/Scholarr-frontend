@@ -29,7 +29,9 @@ const Nav = ({ setIsLoggedIn }) => {
             Logout
           </li>
           {/* </Link> */}
-          <div className="profile-picture"></div>
+          <Link to="/profile">
+            <div className="profile-picture"></div>
+          </Link>
         </div>
       </nav>
     </header>

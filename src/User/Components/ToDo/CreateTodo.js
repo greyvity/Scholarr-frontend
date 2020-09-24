@@ -17,6 +17,8 @@ export default class CreateTodo extends Component {
       todo_responsible: "",
       todo_priority: "",
       todo_completed: false,
+      errorMessage: "",
+      successMessage: "",
     };
   }
 
@@ -38,7 +40,7 @@ export default class CreateTodo extends Component {
     });
   }
 
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
 
     console.log(`Form submitted:`);
@@ -48,50 +50,94 @@ export default class CreateTodo extends Component {
     console.log(`Todo Completed: ${this.state.todo_completed}`);
 
     const newTodo = {
-      todo_description: this.state.todo_description,
-      todo_responsible: this.state.todo_responsible,
-      todo_priority: this.state.todo_priority,
-      todo_completed: this.state.todo_completed,
+      description: this.state.todo_description,
+      responsible: this.state.todo_responsible,
+      priority: this.state.todo_priority,
+      completed: this.state.todo_completed,
+      deadlineDate: e.target.deadline.value,
     };
 
-    axios
-      .post("http://localhost:4000/todos/add", newTodo)
-      .then((res) => console.log(res.data));
+    const options = {
+      headers: {
+        "content-type": "application/json",
+        "auth-token": this.props.token,
+      },
+      method: "POST",
+      body: JSON.stringify(newTodo),
+    };
+
+    console.log(options);
+    const response = await fetch(
+      `/api/users/todo/${this.props.user._id}/create_todo`,
+      options
+    );
+    console.log(response);
+    const jsonResponse = await response.json();
+    console.log(jsonResponse);
+    if (jsonResponse.success) {
+      console.log(this.props);
+      // this.props.history.push("/todo");
+      console.log(this.props.location);
+    }
 
     this.setState({
       todo_description: "",
       todo_responsible: "",
       todo_priority: "",
       todo_completed: false,
+      errorMessage: jsonResponse.error?.message,
+      successMessage: jsonResponse.success?.message,
     });
+
+    setTimeout(() => {
+      this.setState({
+        errorMessage: "",
+        successMessage: "",
+      });
+    }, 3000);
   }
 
   render() {
     return (
       <motion.div
+        initial={{ x: "-100vw" }}
+        animate={{ x: 0 }}
         exit={{ x: "100vw" }}
         className="todo-container"
-        style={{ marginTop: 20 }}
+        style={{ marginTop: 80 }}
       >
         <nav className="todo-nav-container">
           <ul className="todo-nav">
-            <li className="todo-navbar-item">
+            <motion.li
+              animate={{ filter: "contrast(1)" }}
+              whileHover={{ filter: "contrast(0.5)" }}
+              whileTap={{ scale: 0.9 }}
+              className="todo-navbar-item"
+            >
               <Link to="/todo" className="todo-nav-link">
                 Todo List
               </Link>
-            </li>
-            <li>
+            </motion.li>
+            <motion.li
+              animate={{ filter: "contrast(1)" }}
+              whileHover={{ filter: "contrast(0.5)" }}
+              whileTap={{ scale: 0.9 }}
+            >
               <Link to="/todo/create">Create Todo</Link>
-            </li>
+            </motion.li>
           </ul>
         </nav>
-        <h3>Create New Todo</h3>
-        <form onSubmit={this.onSubmit}>
+        <h3 className="todo-heading">Create New Todo</h3>
+
+        <form className="create-todo" onSubmit={this.onSubmit}>
+          <h2 className="error-message">{this.state.errorMessage}</h2>
+          <h2 style={{ color: "green" }}>{this.state.successMessage}</h2>
           <div className="form-group">
             <label>Description: </label>
             <input
               type="text"
               className="form-control"
+              placeholder="description"
               value={this.state.todo_description}
               onChange={this.onChangeTodoDescription}
             />
@@ -100,12 +146,23 @@ export default class CreateTodo extends Component {
             <label>Responsible: </label>
             <input
               type="text"
+              placeholder="responsible"
               className="form-control"
               value={this.state.todo_responsible}
               onChange={this.onChangeTodoResponsible}
             />
           </div>
           <div className="form-group">
+            <label>Deadline: </label>
+            <input
+              type="datetime-local"
+              placeholder="responsible"
+              className="form-control"
+              name="deadline"
+            />
+          </div>
+          <div className="form-group-radio">
+            <h3>Priority</h3>
             <div className="form-check form-check-inline">
               <input
                 className="form-check-input"
@@ -116,7 +173,9 @@ export default class CreateTodo extends Component {
                 checked={this.state.todo_priority === "Low"}
                 onChange={this.onChangeTodoPriority}
               />
-              <label className="form-check-label">Low</label>
+              <label htmlFor="priorityLow" className="form-check-label">
+                Low
+              </label>
             </div>
             <div className="form-check form-check-inline">
               <input
@@ -128,7 +187,9 @@ export default class CreateTodo extends Component {
                 checked={this.state.todo_priority === "Medium"}
                 onChange={this.onChangeTodoPriority}
               />
-              <label className="form-check-label">Medium</label>
+              <label htmlFor="priorityMedium" className="form-check-label">
+                Medium
+              </label>
             </div>
             <div className="form-check form-check-inline">
               <input
@@ -140,14 +201,20 @@ export default class CreateTodo extends Component {
                 checked={this.state.todo_priority === "High"}
                 onChange={this.onChangeTodoPriority}
               />
-              <label className="form-check-label">High</label>
+              <label htmlFor="priorityHigh" className="form-check-label">
+                High
+              </label>
             </div>
           </div>
           <div className="form-group">
-            <input
+            <motion.input
+              initial={{ filter: "contrast(0.9)" }}
+              animate={{ filter: "contrast(1)" }}
+              whileHover={{ filter: "contrast(0.9)" }}
+              whileTap={{ scale: 0.9 }}
               type="submit"
               value="Create Todo"
-              className="btn btn-primary"
+              className="button-submit-todo"
             />
           </div>
         </form>

@@ -4,22 +4,36 @@ import { motion } from "framer-motion";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import TodoList from "./TodoList";
 
-function Todo() {
+function Todo({ user, token }) {
   return (
-    <motion.div exit={{ x: "100vw" }} className="todo-container">
+    <motion.div
+      exit={{ x: "100vw" }}
+      initial={{ x: "-100vw" }}
+      animate={{ x: 0 }}
+      className="todo-container"
+    >
       <nav className="todo-nav-container">
         <ul className="todo-nav">
-          <li className="todo-navbar-item">
+          <motion.li
+            animate={{ filter: "contrast(1)" }}
+            whileHover={{ filter: "contrast(0.5)" }}
+            whileTap={{ scale: 0.9 }}
+            className="todo-navbar-item"
+          >
             <Link to="/todo" className="todo-nav-link">
               Todo List
             </Link>
-          </li>
-          <li>
+          </motion.li>
+          <motion.li
+            animate={{ filter: "contrast(1)" }}
+            whileHover={{ filter: "contrast(0.5)" }}
+            whileTap={{ scale: 0.9 }}
+          >
             <Link to="/todo/create">Create Todo</Link>
-          </li>
+          </motion.li>
         </ul>
       </nav>
-      <TodoList />
+      <TodoList token={token} user={user} />
     </motion.div>
   );
 }

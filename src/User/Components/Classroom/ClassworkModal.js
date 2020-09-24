@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
 
 const backdrop = {
   visible: { opacity: 1 },
@@ -23,64 +24,112 @@ const ClassworkModal = ({
   extractClassInfo,
 }) => {
   const [workType, setWorkType] = useState("Assignment");
+  const [error, setError] = useState("");
 
   const handleAddWork = async (e) => {
     e.preventDefault();
     try {
       const type = e.target["work-type"].value.toLowerCase();
-      let workBody;
-      switch (type) {
-        case "question": {
-          workBody = {
-            title: e.target["work-title"].value,
-            description: e.target["work-description"].value,
-            deadlineDate: e.target["date-picker"].value,
-          };
-          break;
+
+      if (!(workType === "general" || workType === "question")) {
+        let files;
+        files = e.target["file-picker"].files[0];
+
+        const attachments = new FormData();
+
+        switch (type) {
+          case "material": {
+            attachments.append("attachments", files);
+            attachments.append("title", e.target["work-title"].value);
+            attachments.append(
+              "description",
+              e.target["work-description"].value
+            );
+            break;
+          }
+          case "question": {
+            attachments.append("title", e.target["work-title"].value);
+            attachments.append(
+              "description",
+              e.target["work-description"].value
+            );
+            attachments.append("deadlineDate", e.target["date-picker"].value);
+            break;
+          }
+          default:
+            attachments.append("attachments", files);
+            attachments.append("title", e.target["work-title"].value);
+            attachments.append(
+              "description",
+              e.target["work-description"].value
+            );
+            attachments.append("deadlineDate", e.target["date-picker"].value);
+            attachments.append("totalGrade", e.target["total-marks"].value);
+            break;
         }
-        case "material":
-        case "general":
-        case "description": {
-          workBody = {
-            title: e.target["work-title"].value,
-            description: e.target["work-description"].value,
-          };
-          break;
+
+        const options = {
+          headers: {
+            "content-type":
+              "multipart/form-data; boundary=---------------------------974767299852498929531610575",
+            "auth-token": token,
+          },
+          onUploadProgress: (progressEvent) => {
+            console.log(
+              parseInt(
+                Math.round((progressEvent.loaded * 100) / progressEvent.total)
+              )
+            );
+            // Clear percentage
+            // setTimeout(() => setUploadPercentage(0), 10000);
+          },
+        };
+
+        const response = await axios.post(
+          `/api/classrooms/cw/${classId}/classworks/create_${type}`,
+          attachments,
+          options
+        );
+
+        if (response.data.success) {
+          setShowClassworkModal(false);
+          extractClassInfo();
         }
-        default:
-          workBody = {
-            title: e.target["work-title"].value,
-            description: e.target["work-description"].value,
-            totalGrade: e.target["total-marks"].value,
-            deadlineDate: e.target["date-picker"].value,
-          };
-          break;
-      }
-      console.log(workBody);
+      } else {
+        let workBody = {
+          title: e.target["work-title"].value,
+          description: e.target["work-description"].value,
+        };
 
-      const options = {
-        headers: {
-          "content-type": "application/json",
-          "auth-token": token,
-        },
-        method: "POST",
-        body: JSON.stringify(workBody),
-      };
+        if (type === "question") {
+          workBody["totalGrade"] = e.target["total-marks"].value;
+          workBody["deadlineDate"] = e.target["date-picker"].value;
+        }
 
-      const response = await fetch(
-        `/api/classrooms/cw/${classId}/classworks/create_${type}`,
-        options
-      );
+        const options = {
+          headers: {
+            "content-type": "application/json",
+            "auth-token": token,
+          },
+          method: "POST",
+          body: JSON.stringify(workBody),
+        };
 
-      const jsonResponse = await response.json();
-      console.log(jsonResponse);
-      if (jsonResponse.success) {
-        setShowClassworkModal(false);
-        extractClassInfo();
+        const response = await fetch(
+          `/api/classrooms/cw/${classId}/classworks/create_${type}`,
+          options
+        );
+        const jsonResponse = await response.json();
+        if (jsonResponse.success) {
+          setShowClassworkModal(false);
+          extractClassInfo();
+        }
+        setError(jsonResponse.error?.message);
       }
     } catch (err) {
       console.log(err);
-      window.alert(err);
+      setError(err.message);
+      // window.alert(err);
     }
   };
 
@@ -96,7 +145,13 @@ const ClassworkModal = ({
         >
           <motion.div className="modal" variants={modal}>
             <h1 className="modal-heading">ADD WORK</h1>
-            <form actionn="#" className="create-work" onSubmit={handleAddWork}>
+            <form
+              actionn="#"
+              className="create-work"
+              encType="multipart/form-data"
+              onSubmit={handleAddWork}
+            >
+              {error && <h3 className="error-message">{error}</h3>}
               <div className="work-type-container">
                 <label htmlFor="work-type">Type</label>
                 <select
@@ -116,6 +171,7 @@ const ClassworkModal = ({
               <div className="work-title-input">
                 <label htmlFor="work-title">Title</label>
                 <input
+                  required
                   type="text"
                   name="work-title"
                   id="work-title"
@@ -125,6 +181,7 @@ const ClassworkModal = ({
               <div className="work-description-input">
                 <label htmlFor="work-description">Description</label>
                 <textarea
+                  required
                   name="work-description"
                   placeholder="description"
                   id="work-description"
@@ -139,6 +196,7 @@ const ClassworkModal = ({
                       type="number"
                       min="10"
                       max="100"
+                      required
                       placeholder="total marks"
                       name="total-marks"
                       id="total-marks"
@@ -148,22 +206,26 @@ const ClassworkModal = ({
               {workType === "General" || workType === "Material" || (
                 <div className="date-picker-container">
                   <label htmlFor="date-picker">Deadline</label>
-                  <input type="date" name="date-picker" id="date-picker" />
+                  <input
+                    type="date"
+                    name="date-picker"
+                    required
+                    id="date-picker"
+                  />
                 </div>
               )}
-              {workType !== "Assignment" ||
-                workType !== "Question" ||
-                workType !== "Test" || (
-                  <div className="file-picker-container">
-                    <label htmlFor="file-picker">Attachment:</label>
-                    <input
-                      type="file"
-                      id="file-picker"
-                      name="file-picker"
-                      accept="image/*, .pdf, .doc"
-                    />
-                  </div>
-                )}
+              {workType === "General" || (
+                <div className="file-picker-container">
+                  <label htmlFor="file-picker">Attachment:</label>
+                  <input
+                    required
+                    type="file"
+                    id="file-picker"
+                    name="file-picker"
+                    accept="image/*, .pdf, .doc"
+                  />
+                </div>
+              )}
               <div className="submit-actions">
                 <input type="submit" value="Add" className="add-work-submit" />
                 <button
@@ -182,30 +244,3 @@ const ClassworkModal = ({
 };
 
 export default ClassworkModal;
-
-// (
-//   <div className="order-place-modal">
-//     <div className="order-placed">
-//       <h1>Order Placed</h1>
-//       <h2>You will be notified on your cell phone shortly.</h2>
-//       <h2>Feel free to go through our website.</h2>
-//       <h2>Here's some things you might be interested in</h2>
-//       <button className="price">Wash your hands</button>
-//       <Link to="/">
-//         <button className="price">Back to our site</button>
-//       </Link>
-//       <Link to="/gallery">
-//         <button className="price">
-//           A Visual Walkthrough of our restaurant
-//         </button>
-//       </Link>
-//       <Link to="/menu">
-//         <button className="price">More Fooooood</button>
-//       </Link>
-//       <button className="price"> Know More About The Developer :v</button>
-//     </div>
-//     <div className="background"></div>
-//   </div>
-// ) : (
-//   ""
-// )
