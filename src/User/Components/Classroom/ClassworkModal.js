@@ -31,7 +31,37 @@ const ClassworkModal = ({
     try {
       const type = e.target["work-type"].value.toLowerCase();
 
-      if (!(workType === "general" || workType === "question")) {
+      if (type === "general" || type === "question") {
+        let workBody = {
+          title: e.target["work-title"].value,
+          description: e.target["work-description"].value,
+        };
+
+        if (type === "question") {
+          workBody["totalGrade"] = e.target["total-marks"].value;
+          workBody["deadlineDate"] = e.target["date-picker"].value;
+        }
+
+        const options = {
+          headers: {
+            "content-type": "application/json",
+            "auth-token": token,
+          },
+          method: "POST",
+          body: JSON.stringify(workBody),
+        };
+
+        const response = await fetch(
+          `/api/classrooms/cw/${classId}/classworks/create_${type}`,
+          options
+        );
+        const jsonResponse = await response.json();
+        if (jsonResponse.success) {
+          setShowClassworkModal(false);
+          extractClassInfo();
+        }
+        setError(jsonResponse.error?.message);
+      } else {
         let files;
         files = e.target["file-picker"].files[0];
 
@@ -95,36 +125,6 @@ const ClassworkModal = ({
           setShowClassworkModal(false);
           extractClassInfo();
         }
-      } else {
-        let workBody = {
-          title: e.target["work-title"].value,
-          description: e.target["work-description"].value,
-        };
-
-        if (type === "question") {
-          workBody["totalGrade"] = e.target["total-marks"].value;
-          workBody["deadlineDate"] = e.target["date-picker"].value;
-        }
-
-        const options = {
-          headers: {
-            "content-type": "application/json",
-            "auth-token": token,
-          },
-          method: "POST",
-          body: JSON.stringify(workBody),
-        };
-
-        const response = await fetch(
-          `/api/classrooms/cw/${classId}/classworks/create_${type}`,
-          options
-        );
-        const jsonResponse = await response.json();
-        if (jsonResponse.success) {
-          setShowClassworkModal(false);
-          extractClassInfo();
-        }
-        setError(jsonResponse.error?.message);
       }
     } catch (err) {
       console.log(err);
@@ -187,22 +187,20 @@ const ClassworkModal = ({
                   id="work-description"
                 />
               </div>
-              {workType === "General" ||
-                workType === "Question" ||
-                workType === "Material" || (
-                  <div className="total-marks-container">
-                    <label htmlFor="total-marks">Total Marks</label>
-                    <input
-                      type="number"
-                      min="10"
-                      max="100"
-                      required
-                      placeholder="total marks"
-                      name="total-marks"
-                      id="total-marks"
-                    />
-                  </div>
-                )}
+              {workType === "General" || workType === "Material" || (
+                <div className="total-marks-container">
+                  <label htmlFor="total-marks">Total Marks</label>
+                  <input
+                    type="number"
+                    min="10"
+                    max="100"
+                    required
+                    placeholder="total marks"
+                    name="total-marks"
+                    id="total-marks"
+                  />
+                </div>
+              )}
               {workType === "General" || workType === "Material" || (
                 <div className="date-picker-container">
                   <label htmlFor="date-picker">Deadline</label>
@@ -214,7 +212,7 @@ const ClassworkModal = ({
                   />
                 </div>
               )}
-              {workType === "General" || (
+              {workType === "General" || workType === "Question" || (
                 <div className="file-picker-container">
                   <label htmlFor="file-picker">Attachment:</label>
                   <input
