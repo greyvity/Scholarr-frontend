@@ -43,12 +43,6 @@ export default class CreateTodo extends Component {
   async onSubmit(e) {
     e.preventDefault();
 
-    console.log(`Form submitted:`);
-    console.log(`Todo Description: ${this.state.todo_description}`);
-    console.log(`Todo Responsible: ${this.state.todo_responsible}`);
-    console.log(`Todo Priority: ${this.state.todo_priority}`);
-    console.log(`Todo Completed: ${this.state.todo_completed}`);
-
     const newTodo = {
       description: this.state.todo_description,
       responsible: this.state.todo_responsible,
@@ -66,18 +60,13 @@ export default class CreateTodo extends Component {
       body: JSON.stringify(newTodo),
     };
 
-    console.log(options);
     const response = await fetch(
       `/api/users/todo/${this.props.user._id}/create_todo`,
       options
     );
-    console.log(response);
     const jsonResponse = await response.json();
-    console.log(jsonResponse);
     if (jsonResponse.success) {
-      console.log(this.props);
-      // this.props.history.push("/todo");
-      console.log(this.props.location);
+      this.props.history.push("/todo");
     }
 
     this.setState({

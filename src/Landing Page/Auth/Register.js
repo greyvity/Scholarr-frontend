@@ -8,8 +8,6 @@ const Register = () => {
     const password = e.target.password.value;
     const username = e.target.username.value;
 
-    console.log("Hello" + email);
-
     if (email && password) {
       const userCredentials = {
         email,
@@ -28,19 +26,17 @@ const Register = () => {
           "http://localhost:4000/api/auth/register",
           options
         );
-        console.log(response);
         if (response.ok) {
           const jsonResponse = await response.json();
-          console.log(jsonResponse);
           window.alert("Please check your mail for the verification code.");
         } else {
-          console.log("something went wrong");
+          window.alert("something went wrong");
         }
       } catch (err) {
         console.log(err);
       }
     } else {
-      console.log("i");
+      window.alert("Enter Credentials");
     }
   };
 

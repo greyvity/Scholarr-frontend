@@ -118,7 +118,6 @@ const Weather = () => {
     } else {
       setActiveVector(nightSVG);
     }
-    console.log(time);
   };
 
   useEffect(() => {

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
+import { addToDo } from "../../Integrations/TodoClassroom";
+import * as Google from "../../Integrations/Google";
 
 const backdrop = {
   visible: { opacity: 1 },
@@ -20,11 +22,44 @@ const ClassworkModal = ({
   showClassworkModal,
   classId,
   token,
+  user,
   setShowClassworkModal,
   extractClassInfo,
+  classroom,
 }) => {
   const [workType, setWorkType] = useState("Assignment");
   const [error, setError] = useState("");
+  const [members, setMembers] = useState([]);
+
+  const handleGetUsers = useCallback(async () => {
+    try {
+      const users = classroom?.classMembers?.enrolledMembers;
+      if (users) {
+        const options = {
+          headers: {
+            "content-type": "application/json",
+            "auth-token": token,
+          },
+          method: "POST",
+          body: JSON.stringify({
+            userGroup: users,
+          }),
+        };
+
+        const response = await fetch(`/api/users/group_users`, options);
+        console.log(response);
+        const jsonResponse = await response.json();
+        setMembers(jsonResponse);
+      }
+    } catch (error) {
+      console.log(error);
+      window.alert(error);
+    }
+  }, [token, classroom]);
+
+  useEffect(() => {
+    handleGetUsers();
+  }, [handleGetUsers]);
 
   const handleAddWork = async (e) => {
     e.preventDefault();
@@ -124,6 +159,44 @@ const ClassworkModal = ({
         if (response.data.success) {
           setShowClassworkModal(false);
           extractClassInfo();
+          if (type !== "material") {
+            const newTodo = {
+              description: `Check ${response.data.success.classworkDetails.title} of class ${classroom.className}`,
+              priority: "Medium",
+              completed: false,
+              responsible: "myself",
+              user,
+              token,
+            };
+            addToDo(newTodo);
+            const emails = [];
+            members.forEach((member) => emails.push({ email: member.email }));
+            const temp = response.data.success.classworkDetails.attachments[0].location
+              .split("\\")
+              .join("/");
+            console.log(emails);
+            const event = {
+              summary: `${response.data.success.classworkDetails.title} of class ${classroom.className}`,
+              description: response.data.success.classworkDetails.description,
+              start: {
+                dateTime: response.data.success.classworkDetails.deadlineDate,
+                timeZone: "Asia/Kathmandu",
+              },
+              end: {
+                dateTime: response.data.success.classworkDetails.deadlineDate,
+                timeZone: "Asia/Kathmandu",
+              },
+              attendees: { email: "sthasuraj2@gmail.com" },
+              reminders: {
+                useDefault: true,
+              },
+              source: {
+                title: "Assignment",
+                url: `http://localhost:4000/${temp}`,
+              },
+            };
+            Google.handleClick("addEvent", event);
+          }
         }
       }
     } catch (err) {
@@ -143,7 +216,11 @@ const ClassworkModal = ({
           animate="visible"
           exit="hidden"
         >
-          <motion.div className="modal" variants={modal}>
+          <motion.div
+            // style={{ width: "50%" }}
+            className="modal"
+            variants={modal}
+          >
             <h1 className="modal-heading">ADD WORK</h1>
             <form
               actionn="#"
@@ -205,7 +282,7 @@ const ClassworkModal = ({
                 <div className="date-picker-container">
                   <label htmlFor="date-picker">Deadline</label>
                   <input
-                    type="date"
+                    type="datetime-local"
                     name="date-picker"
                     required
                     id="date-picker"

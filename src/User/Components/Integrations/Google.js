@@ -7,7 +7,7 @@ var DISCOVERY_DOCS = [
 ];
 var SCOPES = "https://www.googleapis.com/auth/calendar.events";
 
-const handleClick = (type) => {
+const handleClick = (type, data) => {
   gapi.load("client:auth2", async () => {
     console.log("Client Loaded ");
 
@@ -31,7 +31,7 @@ const handleClick = (type) => {
           break;
         }
         case "addEvent": {
-          addNewEvent();
+          addNewEvent(data);
           break;
         }
         case "updateEvent": {
@@ -67,34 +67,7 @@ const listUpcomingEvents = () => {
     });
 };
 
-const addNewEvent = async () => {
-  const event = {
-    summary: "EVENT ADDED",
-    location: "Avernue Street",
-    description: "A chance to hear more about Google's developer products.",
-    start: {
-      dateTime: "2020-09-21T09:00:00+05:45",
-      timeZone: "Asia/Kathmandu",
-    },
-    end: {
-      dateTime: "2020-09-22T17:00:00+05:45",
-      timeZone: "Asia/Kathmandu",
-    },
-    recurrence: ["RRULE:FREQ=DAILY;COUNT=1"],
-    attendees: [
-      { email: "imageadhikari@gmail.com" },
-      { email: "sajag.silwal123@gmail.com" },
-      { email: "sthasuraj2@gmail.com" },
-    ],
-    reminders: {
-      useDefault: true,
-      // 'overrides': [
-      //   {'method': 'email', 'minutes': 24 * 60},
-      //   {'method': 'popup', 'minutes': 10}
-      // ]
-    },
-    colorId: 11,
-  };
+const addNewEvent = async (event) => {
   var request = gapi.client.calendar.events.insert({
     calendarId: "primary",
     resource: event,

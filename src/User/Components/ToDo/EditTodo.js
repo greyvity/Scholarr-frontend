@@ -12,6 +12,7 @@ export default class EditTodo extends Component {
     this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
     this.onChangeTodoCompleted = this.onChangeTodoCompleted.bind(this);
     this.onChangeTodoDeadline = this.onChangeTodoDeadline.bind(this);
+    this.handleDeleteTodo = this.handleDeleteTodo.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
@@ -22,7 +23,6 @@ export default class EditTodo extends Component {
     };
   }
   componentDidMount() {
-    console.log(this.props.match.params);
     const options = {
       headers: {
         "content-type": "application/json",
@@ -83,8 +83,6 @@ export default class EditTodo extends Component {
       deadlineDate: this.state.todo_deadline,
     };
 
-    console.log(obj);
-
     try {
       const options = {
         headers: {
@@ -95,16 +93,42 @@ export default class EditTodo extends Component {
         body: JSON.stringify(obj),
       };
 
-      console.log(this.state);
       const response = await fetch(
         `http://localhost:4000/api/users/todo/${this.props.location.state.user._id}/update_todo/${this.props.match.params.todoId}`,
         options
       );
-      console.log(response);
-      console.log(await response.json());
 
       if (response.ok) {
+        window.alert("Todo Updated");
         this.props.history.push("/todo");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async handleDeleteTodo() {
+    try {
+      if (window.confirm("Are you sure you want to delete this Todo")) {
+        const options = {
+          headers: {
+            "content-type": "application/json",
+            "auth-token": this.props.token,
+          },
+          method: "DELETE",
+        };
+
+        const response = await fetch(
+          `http://localhost:4000/api/users/todo/${this.props.location.state.user._id}/delete_todo/${this.props.match.params.todoId}`,
+          options
+        );
+
+        if (response.ok) {
+          window.alert("Todo Deleted");
+          this.props.history.push("/todo");
+        }
+      } else {
+        window.alert("Delete Todo Cancelled By User");
       }
     } catch (error) {
       console.log(error);
@@ -238,6 +262,13 @@ export default class EditTodo extends Component {
             </div>
           </div>
         </form>
+        <button
+          className="add-work-submit cancel"
+          style={{ width: "10%" }}
+          onClick={this.handleDeleteTodo}
+        >
+          DELETE
+        </button>
       </motion.div>
     );
   }

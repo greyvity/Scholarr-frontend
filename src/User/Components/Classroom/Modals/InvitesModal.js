@@ -42,7 +42,6 @@ const InvitesModal = ({
         options
       );
       const jsonResponse = await response.json();
-      console.log(jsonResponse);
       if (jsonResponse.Success) {
         setShowInvitesModal(false);
         extractClassInfo();
@@ -66,9 +65,7 @@ const InvitesModal = ({
       for (let user in users) {
         const response = await fetch(`/api/users/${users[user]}`, options);
         const jsonResponse = await response.json();
-        console.log(jsonResponse);
         tempCollection = [...tempCollection, { ...jsonResponse }];
-        console.log(tempCollection);
       }
       setPendingUsers(tempCollection);
     } catch (error) {
@@ -106,6 +103,15 @@ const InvitesModal = ({
                     </h4>
                   </div>
                 ))}
+            </div>
+            <div className="submit-actions">
+              <input type="submit" value="Add" className="add-work-submit" />
+              <button
+                className="add-work-submit cancel"
+                onClick={() => setShowInvitesModal(false)}
+              >
+                Cancel
+              </button>
             </div>
           </motion.div>
         </motion.div>

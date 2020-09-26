@@ -222,19 +222,13 @@ a {
 }
 
 .modal {
-  max-width: 400px;
+  max-width: 700px;
   margin: 0 auto;
+  width: "50%";
   padding: 40px 20px;
   background: white;
   border-radius: 10px;
   text-align: center;
-}
-
-.modal button {
-  color: #444;
-  border-color: #444;
-  font-weight: bold;
-  margin-top: 20px;
 }
 
 .modal p {
@@ -703,6 +697,9 @@ p {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -782,8 +779,8 @@ p {
 .create-work div input,
 .create-work div textarea {
   width: 50%;
-  min-width: 200px;
-  max-width: 200px;
+  min-width: 500px;
+  max-width: 500px;
   min-height: 30px;
   font-size: 20px;
   padding: 5px 10px;
@@ -811,6 +808,8 @@ p {
   width: 50%;
   height: 40px;
   text-align: center;
+  max-width: none !important;
+  min-width: auto !important;
   margin: 40px 5px 0 5px;
   font-size: 20px;
   font-weight: bold;
@@ -819,6 +818,59 @@ p {
 .create-work .cancel {
   background-color: #5f1818;
   color: white;
+}
+
+.submit-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.add-work-submit {
+  margin-top: 40px;
+  width: 50%;
+  height: 40px;
+  text-align: center;
+  margin: 40px 5px 0 5px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.cancel {
+  background-color: #5f1818;
+  color: white;
+}
+
+.attachment {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #004db1;
+}
+
+.classwork-list:hover .edit-action,
+.classwork-list:hover .delete-action {
+  opacity: 1;
+}
+
+.edit-action,
+.delete-action {
+  font-size: 15px;
+  opacity: 0;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+
+button,
+i {
+  cursor: pointer;
+}
+
+.grades {
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .grid {
@@ -1270,6 +1322,7 @@ input:-webkit-autofill:active {
 
 .completed {
   text-decoration: line-through;
+  color: green;
 }
 
 /* Profile styles */

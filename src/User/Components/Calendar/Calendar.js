@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-import * as Google from "../../Google";
+import * as Google from "../Integrations/Google";
 
 function Calendar() {
   return (

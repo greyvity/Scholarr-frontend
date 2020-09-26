@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import ViewYourWorks from "./YourWorksModal";
 
 const Profile = ({ user, token, setUser }) => {
   const [username, setUsername] = useState(user.username || "");
@@ -9,6 +10,7 @@ const Profile = ({ user, token, setUser }) => {
   const [bio, setBio] = useState(user.bio || "");
   const [dob, setdob] = useState(user.dateOfBirth || "");
   const [error, setError] = useState("");
+  const [showYourWorks, setShowYourWorks] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,9 +41,8 @@ const Profile = ({ user, token, setUser }) => {
       );
 
       const jsonResponse = await response.json();
-      console.log(jsonResponse);
       if (jsonResponse.Success) {
-        // extractUserInfo();
+        extractUserInfo();
       }
       setError(jsonResponse.error?.message);
       setTimeout(() => setError(""), 3000);
@@ -52,36 +53,34 @@ const Profile = ({ user, token, setUser }) => {
     }
   };
 
-  // const extractUserInfo = useCallback(async () => {
-  //   try {
-  //     const options = {
-  //       headers: {
-  //         "content-type": "application/json",
-  //         "auth-token": token,
-  //       },
-  //     };
+  const extractUserInfo = useCallback(async () => {
+    try {
+      const options = {
+        headers: {
+          "content-type": "application/json",
+          "auth-token": token,
+        },
+      };
+      const response = await fetch(`/api/users/${user._id}/private`, options);
 
-  //     const response = await fetch(`/api/users/${user._id}`, options);
+      const jsonResponse = await response.json();
+      if (jsonResponse._id) {
+        setUser(jsonResponse);
 
-  //     const jsonResponse = await response.json();
-  //     console.log(jsonResponse);
-  //     // if (jsonResponse.id) {
-  //     //   setUser(jsonResponse);
+        localStorage.setItem("user", JSON.stringify(jsonResponse));
+      }
+      setError(jsonResponse.error?.message);
+      setTimeout(() => setError(""), 3000);
+    } catch (err) {
+      console.log(err);
+      setError(err.message);
+      setTimeout(() => setError(""), 3000);
+    }
+  }, [token, user._id, setUser]);
 
-  //     //   localStorage.setItem("user", JSON.stringify(jsonResponse.success.user));
-  //     // }
-  //     // setError(jsonResponse.error?.message);
-  //     // setTimeout(() => setError(""), 3000);
-  //   } catch (err) {
-  //     console.log(err);
-  //     setError(err.message);
-  //     setTimeout(() => setError(""), 3000);
-  //   }
-  // }, [token, user._id]);
-
-  // useEffect(() => {
-  //   extractUserInfo();
-  // }, [extractUserInfo]);
+  useEffect(() => {
+    extractUserInfo();
+  }, [extractUserInfo]);
 
   return (
     <motion.div
@@ -90,14 +89,21 @@ const Profile = ({ user, token, setUser }) => {
       exit={{ x: "100vw" }}
       className="profile-container"
     >
-      {console.log(user)}
-      {/* <motion.div className="modal"> */}
+      {/* {showYourWorks && (
+        <ViewYourWorks
+          user={user}
+          token={token}
+          showYourWorksModal={showYourWorks}
+          setShowYourWorksModal={setShowYourWorks}
+        />
+      )} */}
       <h1 className="modal-heading">Profile</h1>
       {error && <h3 className="error-message">{error}</h3>}
       <motion.h2
-        initial={{ opacity: 0, y: -10 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0, transition: { delay: 0.5 } }}
         className="your-works"
+        onClick={() => setShowYourWorks(true)}
       >
         View Your Works
       </motion.h2>

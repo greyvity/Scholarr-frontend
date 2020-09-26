@@ -19,17 +19,39 @@ const modal = {
 
 const YourWorksModal = ({
   showYourWorksModal,
-  classDetails,
+  classroom,
   classId,
   token,
   setShowYourWorksModal,
-  extractClassInfo,
   user,
 }) => {
-  const [pendingUsers, setPendingUsers] = useState([]);
+  const [submissions, setSubmissions] = useState([]);
 
-  const handleAcceptInvite = async (e, userId) => {
-    e.preventDefault();
+  // const handleGetSubmissions = async (e, userId) => {
+  //   e.preventDefault();
+  //   try {
+  //     const options = {
+  //       headers: {
+  //         "content-type": "application/json",
+  //         "auth-token": token,
+  //       },
+  //     };
+  //     const response = await fetch(
+  //       `/api/classrooms/${classId}/accept_request/${userId}`,
+  //       options
+  //     );
+  //     const jsonResponse = await response.json();
+  //     console.log(jsonResponse);
+  //     if (jsonResponse.Success) {
+  //       setShowYourWorksModal(false);
+  //       extractClassInfo();
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const handleGetSubmissions = useCallback(async () => {
     try {
       const options = {
         headers: {
@@ -37,49 +59,23 @@ const YourWorksModal = ({
           "auth-token": token,
         },
       };
+
       const response = await fetch(
-        `/api/classrooms/${classId}/accept_request/${userId}`,
+        `/api/classrooms/cw/classworks/submissions/user/${user._id}`,
         options
       );
       const jsonResponse = await response.json();
-      console.log(jsonResponse);
-      if (jsonResponse.Success) {
-        setShowYourWorksModal(false);
-        extractClassInfo();
+      if (jsonResponse.success) {
+        setSubmissions(jsonResponse.success.submission);
       }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleGetUsers = useCallback(async () => {
-    try {
-      const users = classDetails?.classMembers?.memberRequest;
-
-      const options = {
-        headers: {
-          "content-type": "application/json",
-          "auth-token": token,
-        },
-      };
-      let tempCollection = [];
-      for (let user in users) {
-        const response = await fetch(`/api/users/${users[user]}`, options);
-        const jsonResponse = await response.json();
-        console.log(jsonResponse);
-        tempCollection = [...tempCollection, { ...jsonResponse }];
-        console.log(tempCollection);
-      }
-      setPendingUsers(tempCollection);
     } catch (error) {
       console.log(error);
-      window.alert(error);
     }
-  }, [token, classDetails]);
+  }, [token, user._id]);
 
   useEffect(() => {
-    handleGetUsers();
-  }, [handleGetUsers]);
+    handleGetSubmissions();
+  }, [handleGetSubmissions]);
 
   return (
     <AnimatePresence>
@@ -92,20 +88,32 @@ const YourWorksModal = ({
           exit="hidden"
         >
           <motion.div className="modal" variants={modal}>
-            <h1 className="modal-heading">Invites</h1>
-            <div className="display-invites">
-              {pendingUsers &&
-                pendingUsers.map((pendingUser) => (
-                  <div className="invite-container" key={pendingUser.id}>
-                    <li className="invite">{pendingUser.email}</li>
-                    <h4
-                      className="accept-icon"
-                      onClick={(e) => handleAcceptInvite(e, pendingUser.id)}
-                    >
-                      ✔
-                    </h4>
-                  </div>
-                ))}
+            <h1 className="modal-heading">Your Works</h1>
+            <div className="your-works">
+              {submissions.map((submission) => (
+                <div key={submission.submission._id} className="your-work">
+                  <a
+                    href={submission.submission.attachments[0]?.location}
+                    className="attachment"
+                  >
+                    {submission.submission.attachments[0]?.fileName} hello
+                  </a>
+                  <h3 className="grades">
+                    {submission.submission.obtainedGrade || "-"}
+                  </h3>
+                  <h3 className="feedback">
+                    {submission.submission.feedback || "-"}
+                  </h3>
+                </div>
+              ))}
+            </div>
+            <div className="submit-actions">
+              <button
+                className="add-work-submit cancel"
+                onClick={() => setShowYourWorksModal(false)}
+              >
+                Cancel
+              </button>
             </div>
           </motion.div>
         </motion.div>

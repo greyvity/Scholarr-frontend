@@ -25,7 +25,6 @@ const Login = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e.target.password.value);
     const email = e.target.email.value;
     const password = e.target.password.value;
 
@@ -45,11 +44,8 @@ const Login = ({
         "http://localhost:4000/api/auth/login",
         options
       );
-      console.log(response);
       const jsonResponse = await response.json();
-      console.log(jsonResponse);
       if (jsonResponse.status === "error") {
-        console.log(jsonResponse.error);
         const temp = {};
         temp[jsonResponse.error.location] = {
           message: jsonResponse.error.message,
@@ -75,7 +71,6 @@ const Login = ({
   };
 
   useEffect(() => {
-    console.log(isLoggedIn);
     if (isLoggedIn) location.pathname = "/";
   }, [isLoggedIn, location.pathname]);
 

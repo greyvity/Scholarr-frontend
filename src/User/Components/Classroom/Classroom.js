@@ -28,7 +28,6 @@ const Classroom = ({ token, user }) => {
         classSubject: formData.subject.value,
         affiliatedInstitution: formData.affiliation.value,
       };
-      console.log(classAttributes);
 
       const options = {
         headers: {
@@ -40,7 +39,6 @@ const Classroom = ({ token, user }) => {
       };
       const response = await fetch("/api/classrooms/create", options);
       const jsonResponse = await response.json();
-      console.log(jsonResponse);
       if (jsonResponse.success) {
         setIsCreating(false);
         getClassData();
@@ -52,14 +50,13 @@ const Classroom = ({ token, user }) => {
 
   const handleDeleteClass = async (classroom) => {
     try {
-      if (window.confirm("Are you sure you want to join this class?")) {
+      if (window.confirm("Are you sure you want to Delete this class?")) {
         const classBody = {
           className: classroom.className,
           classDescription: classroom.classDescription,
           classSubject: classroom.classSubject,
           affiliatedInstitution: classroom.affiliatedInstitution,
         };
-        console.log(classBody);
 
         const options = {
           headers: {
@@ -75,7 +72,6 @@ const Classroom = ({ token, user }) => {
           options
         );
         const jsonResponse = await response.json();
-        console.log(jsonResponse);
         if (jsonResponse.success) {
           getClassData();
           window.alert("Class Deleted Successfully");
@@ -98,13 +94,12 @@ const Classroom = ({ token, user }) => {
       };
       const response = await fetch(`/api/classrooms/user/${user._id}`, options);
       const jsonResponse = await response.json();
-      console.log(jsonResponse);
       if (!response.ok) throw jsonResponse.error;
       setAttendingClassrooms(jsonResponse.classesAttending);
       setTeachingClassrooms(jsonResponse.classesTeaching);
     } catch (error) {
       console.log(error);
-      window.alert(error.message);
+      // window.alert(error.message);
     }
   }, [token, user._id]);
 
@@ -115,7 +110,6 @@ const Classroom = ({ token, user }) => {
         const classAttributes = {
           classCode: e.target.classCode.value,
         };
-        console.log(classAttributes);
 
         const options = {
           headers: {
@@ -127,7 +121,6 @@ const Classroom = ({ token, user }) => {
         };
         const response = await fetch("/api/classrooms/request", options);
         const jsonResponse = await response.json();
-        console.log(jsonResponse);
         if (jsonResponse.Success) {
           setIsJoining(false);
           window.alert(
@@ -145,7 +138,6 @@ const Classroom = ({ token, user }) => {
   };
 
   useEffect(() => {
-    console.log("firing");
     getClassData();
   }, [getClassData]);
 
@@ -200,7 +192,9 @@ const Classroom = ({ token, user }) => {
               >
                 <ClassroomShortened
                   isTeaching={true}
+                  token={token}
                   classroom={classroom}
+                  getClassData={getClassData}
                   handleDeleteClass={handleDeleteClass}
                 ></ClassroomShortened>
               </motion.div>

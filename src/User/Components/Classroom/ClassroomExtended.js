@@ -1,15 +1,19 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { motion } from "framer-motion";
-import ClassworkModal from "./ClassworkModal";
+import ClassworkModal from "./Modals/ClassworkModal";
 import ClassworksList from "./ClassworksList";
-import InvitesModal from "./InvitesModal";
+import InvitesModal from "./Modals/InvitesModal";
+import ViewYourWorks from "../Profile/YourWorksModal";
+import MembersModal from "./Modals/MembersModal";
 // import Classroom from "./Classroom";
 
 const ClassroomExtended = ({ token, match, user, location }) => {
   const [classDetails, setClassDetails] = useState({});
+  const [showYourWorksModal, setShowYourWorksModal] = useState(false);
   const [classworks, setClassworks] = useState([]);
   const [showClassworkModal, setShowClassworkModal] = useState(false);
   const [showInvitesModal, setShowInvitesModal] = useState(false);
+  const [showMembersModal, setShowMembersModal] = useState(false);
   // const [isCreating, setIsCreating] = useState(false);
   const [code, setCode] = useState("Click to Copy Code");
 
@@ -40,7 +44,6 @@ const ClassroomExtended = ({ token, match, user, location }) => {
         classworkOptions
       );
       const jsonClassworkResponse = await classworkResponse.json();
-      console.log(jsonClassworkResponse.success.classworks);
       setClassworks(jsonClassworkResponse.success.classworks);
     } catch (error) {
       console.log(error);
@@ -55,10 +58,30 @@ const ClassroomExtended = ({ token, match, user, location }) => {
   return (
     <motion.div exit={{ y: 1000 }} className="extended classroom-container">
       <ClassworkModal
+        classroom={classDetails}
         showClassworkModal={showClassworkModal}
         setShowClassworkModal={setShowClassworkModal}
         classId={classDetails._id}
         token={token}
+        user={user}
+        extractClassInfo={extractClassInfo}
+      />
+      <ViewYourWorks
+        showYourWorksModal={showYourWorksModal}
+        setShowYourWorksModal={setShowYourWorksModal}
+        classroom={classDetails}
+        token={token}
+        user={user}
+        classId={match.params.classId}
+        extractClassInfo={extractClassInfo}
+      />
+      <MembersModal
+        showModal={showMembersModal}
+        setShowModal={setShowMembersModal}
+        classDetails={classDetails}
+        token={token}
+        user={user}
+        classId={match.params.classId}
         extractClassInfo={extractClassInfo}
       />
       <InvitesModal
@@ -74,11 +97,18 @@ const ClassroomExtended = ({ token, match, user, location }) => {
         <div className="class-information">
           <h1 className="class-name-header">{classDetails.className}</h1>
           <h2 className="class-desc-header">{classDetails.classDescription}</h2>
-          {location.state.isTeaching && (
+          {location.state.isTeaching ? (
             <h3 className="invites" onClick={() => setShowInvitesModal(true)}>
               Show Invites
             </h3>
+          ) : (
+            <h3 className="invites" onClick={() => setShowYourWorksModal(true)}>
+              Show Your Submissions
+            </h3>
           )}
+          <h3 className="invites" onClick={() => setShowMembersModal(true)}>
+            Show Members
+          </h3>
           <h3
             className="class-code-header"
             onClick={(e) => {
@@ -101,11 +131,9 @@ const ClassroomExtended = ({ token, match, user, location }) => {
             >
               <motion.svg
                 initial={{ rotate: 0 }}
-                animate={
-                  {
-                    // rotate: isCreating ? 135 : 0,
-                  }
-                }
+                animate={{
+                  rotate: showClassworkModal ? -45 : 0,
+                }}
                 transition={{
                   delay: 0.1,
                 }}
@@ -126,13 +154,21 @@ const ClassroomExtended = ({ token, match, user, location }) => {
           )}
           <div className="classworks-list">
             <h3 className="class-title">Classworks</h3>
-            {classworks.map((classwork) => (
-              <ClassworksList
-                key={classwork._id}
-                isTeaching={location.state.isTeaching}
-                classwork={classwork}
-              />
-            ))}
+            {classworks
+              .slice(0)
+              .reverse()
+              .map((classwork) => (
+                <ClassworksList
+                  key={classwork._id}
+                  isTeaching={location.state.isTeaching}
+                  classwork={classwork}
+                  token={token}
+                  user={user}
+                  classroom={classDetails}
+                  classId={match.params.classId}
+                  extractClassInfo={extractClassInfo}
+                />
+              ))}
           </div>
         </div>
       </div>

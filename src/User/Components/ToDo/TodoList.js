@@ -1,12 +1,21 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 
 const Todo = (props) => (
   <tr>
-    {console.log(props.todo.completed)}
-    <td className={props.todo.completed ? "completed" : ""}>
+    <td
+      style={{
+        color:
+          props.todo.priority !== "High"
+            ? props.todo.priority === "Medium"
+              ? "blue"
+              : "yellowgreen"
+            : "red",
+      }}
+      className={props.todo.completed ? "completed" : ""}
+    >
       {props.todo.description}
     </td>
     <td className={props.todo.completed ? "completed" : ""}>
@@ -56,7 +65,6 @@ export default class TodosList extends Component {
         options
       )
       .then((response) => {
-        console.log(response);
         this.setState({ todos: response.data.success.todo });
       })
       .catch(function (error) {
