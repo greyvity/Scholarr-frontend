@@ -160,42 +160,45 @@ const ClassworkModal = ({
           setShowClassworkModal(false);
           extractClassInfo();
           if (type !== "material") {
-            const newTodo = {
-              description: `Check ${response.data.success.classworkDetails.title} of class ${classroom.className}`,
-              priority: "Medium",
-              completed: false,
-              responsible: "myself",
-              user,
-              token,
-            };
-            addToDo(newTodo);
-            const emails = [];
-            members.forEach((member) => emails.push({ email: member.email }));
-            const temp = response.data.success.classworkDetails.attachments[0].location
-              .split("\\")
-              .join("/");
-            console.log(emails);
-            const event = {
-              summary: `${response.data.success.classworkDetails.title} of class ${classroom.className}`,
-              description: response.data.success.classworkDetails.description,
-              start: {
-                dateTime: response.data.success.classworkDetails.deadlineDate,
-                timeZone: "Asia/Kathmandu",
-              },
-              end: {
-                dateTime: response.data.success.classworkDetails.deadlineDate,
-                timeZone: "Asia/Kathmandu",
-              },
-              attendees: { email: "sthasuraj2@gmail.com" },
-              reminders: {
-                useDefault: true,
-              },
-              source: {
-                title: "Assignment",
-                url: `http://localhost:4000/${temp}`,
-              },
-            };
-            Google.handleClick("addEvent", event);
+            if (window.confirm("Add To your todo?")) {
+              const newTodo = {
+                description: `Check ${response.data.success.classworkDetails.title} of class ${classroom.className}`,
+                priority: "Medium",
+                completed: false,
+                responsible: "myself",
+                user,
+                token,
+              };
+              addToDo(newTodo);
+              //   const emails = [];
+              //   members.forEach((member) => emails.push({ email: member.email }));
+              //   const temp = response.data.success.classworkDetails.attachments[0].location
+              //     .split("\\")
+              //     .join("/");
+              //   console.log(emails);
+              //   const event = {
+              //     summary: `${response.data.success.classworkDetails.title} of class ${classroom.className}`,
+              //     description: response.data.success.classworkDetails.description,
+              //     start: {
+              //       dateTime: response.data.success.classworkDetails.deadlineDate,
+              //       timeZone: "Asia/Kathmandu",
+              //     },
+              //     end: {
+              //       dateTime: response.data.success.classworkDetails.deadlineDate,
+              //       timeZone: "Asia/Kathmandu",
+              //     },
+              //     attendees: { email: "sthasuraj2@gmail.com" },
+              //     reminders: {
+              //       useDefault: true,
+              //     },
+              //     source: {
+              //       title: "Assignment",
+              //       url: `http://localhost:4000/${temp}`,
+              //     },
+              //   };
+              //   Google.handleClick("addEvent", event);
+              // }
+            }
           }
         }
       }
