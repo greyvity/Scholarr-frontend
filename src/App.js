@@ -127,7 +127,7 @@ function App() {
                         />
                       )}
                     />
-                    {/* <Redirect to="/" /> */}
+                    <Redirect to="/" />
                   </Switch>
                 </AnimatePresence>
               )}
