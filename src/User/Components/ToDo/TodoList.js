@@ -25,12 +25,13 @@ const Todo = (props) => (
       {props.todo.priority}
     </td>
     <td className={props.todo.completed ? "completed" : ""}>
-      {props.todo.deadlineDate.split("T")[1].split(":")[0] +
-        ":" +
-        props.todo.deadlineDate.split("T")[1].split(":")[1] +
-        " " +
-        " " +
-        props.todo.deadlineDate.split("T")[0]}
+      {props.todo.deadlineDate &&
+        props.todo.deadlineDate.split("T")[1].split(":")[0] +
+          ":" +
+          props.todo.deadlineDate.split("T")[1].split(":")[1] +
+          " " +
+          " " +
+          props.todo.deadlineDate.split("T")[0]}
     </td>
     <td>
       <Link
@@ -61,7 +62,7 @@ export default class TodosList extends Component {
 
     axios
       .get(
-        `http://localhost:4000/api/users/todo/${this.props.user._id}/todos/`,
+        `https://tranquil-woodland-86159.herokuapp.com/api/users/todo/${this.props.user._id}/todos/`,
         options
       )
       .then((response) => {

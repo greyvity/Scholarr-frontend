@@ -31,7 +31,7 @@ export default class EditTodo extends Component {
     };
     axios
       .get(
-        `http://localhost:4000/api/users/todo/${this.props.location.state.user._id}/detail/${this.props.match.params.todoId}`,
+        `https://tranquil-woodland-86159.herokuapp.com/api/users/todo/${this.props.location.state.user._id}/detail/${this.props.match.params.todoId}`,
         options
       )
       .then((response) => {
@@ -94,7 +94,7 @@ export default class EditTodo extends Component {
       };
 
       const response = await fetch(
-        `http://localhost:4000/api/users/todo/${this.props.location.state.user._id}/update_todo/${this.props.match.params.todoId}`,
+        `https://tranquil-woodland-86159.herokuapp.com/api/users/todo/${this.props.location.state.user._id}/update_todo/${this.props.match.params.todoId}`,
         options
       );
 
@@ -119,7 +119,7 @@ export default class EditTodo extends Component {
         };
 
         const response = await fetch(
-          `http://localhost:4000/api/users/todo/${this.props.location.state.user._id}/delete_todo/${this.props.match.params.todoId}`,
+          `https://tranquil-woodland-86159.herokuapp.com/api/users/todo/${this.props.location.state.user._id}/delete_todo/${this.props.match.params.todoId}`,
           options
         );
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import { addToDo } from "../../Integrations/TodoClassroom";
-import * as Google from "../../Integrations/Google";
+// import * as Google from "../../Integrations/Google";
 
 const backdrop = {
   visible: { opacity: 1 },
@@ -30,7 +30,7 @@ const ClassworkModal = ({
   const [workType, setWorkType] = useState("Assignment");
   const [error, setError] = useState("");
   const [members, setMembers] = useState([]);
-
+  console.log(members);
   const handleGetUsers = useCallback(async () => {
     try {
       const users = classroom?.classMembers?.enrolledMembers;
@@ -46,7 +46,10 @@ const ClassworkModal = ({
           }),
         };
 
-        const response = await fetch(`/api/users/group_users`, options);
+        const response = await fetch(
+          `https://tranquil-woodland-86159.herokuapp.com/api/users/group_users`,
+          options
+        );
         console.log(response);
         const jsonResponse = await response.json();
         setMembers(jsonResponse);
@@ -87,7 +90,7 @@ const ClassworkModal = ({
         };
 
         const response = await fetch(
-          `/api/classrooms/cw/${classId}/classworks/create_${type}`,
+          `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/cw/${classId}/classworks/create_${type}`,
           options
         );
         const jsonResponse = await response.json();
@@ -151,7 +154,7 @@ const ClassworkModal = ({
         };
 
         const response = await axios.post(
-          `/api/classrooms/cw/${classId}/classworks/create_${type}`,
+          `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/cw/${classId}/classworks/create_${type}`,
           attachments,
           options
         );

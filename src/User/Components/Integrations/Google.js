@@ -22,6 +22,7 @@ const handleClick = (type, data) => {
     console.log(gapi.client);
 
     const instance = await gapi.auth2.getAuthInstance();
+    console.log(instance);
     const user = await gapi.auth2.getAuthInstance().signIn();
 
     if (user) {

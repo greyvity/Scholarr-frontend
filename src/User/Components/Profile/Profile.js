@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import ViewYourWorks from "./YourWorksModal";
+// import ViewYourWorks from "./YourWorksModal";
 
 const Profile = ({ user, token, setUser }) => {
   const [username, setUsername] = useState(user.username || "");
@@ -17,6 +17,8 @@ const Profile = ({ user, token, setUser }) => {
     const password = window.prompt(
       "Please Enter Your Password To Make Changes"
     );
+    console.log(showYourWorks);
+
     try {
       const profileDetails = {
         firstName: firstName || user.firstName,
@@ -36,7 +38,7 @@ const Profile = ({ user, token, setUser }) => {
       };
 
       const response = await fetch(
-        `/api/users/${user._id}/profile/edit/`,
+        `https://tranquil-woodland-86159.herokuapp.com/api/users/${user._id}/profile/edit/`,
         options
       );
 
@@ -61,7 +63,10 @@ const Profile = ({ user, token, setUser }) => {
           "auth-token": token,
         },
       };
-      const response = await fetch(`/api/users/${user._id}/private`, options);
+      const response = await fetch(
+        `https://tranquil-woodland-86159.herokuapp.com/api/users/${user._id}/private`,
+        options
+      );
 
       const jsonResponse = await response.json();
       if (jsonResponse._id) {

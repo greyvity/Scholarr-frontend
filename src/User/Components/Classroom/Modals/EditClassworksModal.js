@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
-import { editToDo } from "../../Integrations/TodoClassroom";
+// import { editToDo } from "../../Integrations/TodoClassroom";
 
 const backdrop = {
   visible: { opacity: 1 },
@@ -60,7 +60,7 @@ const EditClassworkModal = ({
         };
 
         const response = await fetch(
-          `/api/classrooms/cw/${classId}/classworks/update/${classwork._id}`,
+          `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/cw/${classId}/classworks/update/${classwork._id}`,
           options
         );
         const jsonResponse = await response.json();
@@ -72,8 +72,8 @@ const EditClassworkModal = ({
       } else {
         let files;
         files = e.target["file-picker"].files[0];
-        const title = e.target["work-title"].value;
-        const deadlineDate = e.target["date-picker"].value;
+        // const title = e.target["work-title"].value;
+        // const deadlineDate = e.target["date-picker"].value;
         const attachments = new FormData();
 
         switch (type) {
@@ -133,7 +133,7 @@ const EditClassworkModal = ({
         };
 
         const response = await axios.patch(
-          `/api/classrooms/cw/${classId}/classworks/update/${classwork._id}`,
+          `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/cw/${classId}/classworks/update/${classwork._id}`,
           attachments,
           options
         );
@@ -168,7 +168,7 @@ const EditClassworkModal = ({
                   key={attachment._id}
                   target="_blank"
                   rel="noopener noreferrer"
-                  href={`http://localhost:4000/${attachment.location}`}
+                  href={`https://tranquil-woodland-86159.herokuapp.com/${attachment.location}`}
                   className="attachment"
                 >
                   {attachment.name}

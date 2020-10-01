@@ -46,7 +46,7 @@ const SubmissionModal = ({
         };
 
         const response = await fetch(
-          `/api/classrooms/cw/${classId}/classworks/${classwork._id}/submit`,
+          `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/cw/${classId}/classworks/${classwork._id}/submit`,
           options
         );
         const jsonResponse = await response.json();
@@ -85,7 +85,7 @@ const SubmissionModal = ({
           };
 
           const response = await axios.post(
-            `/api/classrooms/cw/${classId}/classworks/${classwork._id}/submit`,
+            `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/cw/${classId}/classworks/${classwork._id}/submit`,
             attachments,
             options
           );
@@ -112,7 +112,7 @@ const SubmissionModal = ({
           },
         };
         const response = await fetch(
-          `/api/classrooms/cw/${classId}/classworks/${classwork._id}/submissions/detail/${classwork.submissions[0]?.submission}`,
+          `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/cw/${classId}/classworks/${classwork._id}/submissions/detail/${classwork.submissions[0]?.submission}`,
           options
         );
         const jsonResponse = await response.json();
@@ -150,7 +150,7 @@ const SubmissionModal = ({
                   key={attachment._id}
                   target="_blank"
                   rel="noopener noreferrer"
-                  href={`http://localhost:4000/${attachment.location}`}
+                  href={`https://tranquil-woodland-86159.herokuapp.com/${attachment.location}`}
                   className="attachment"
                 >
                   {attachment.name}

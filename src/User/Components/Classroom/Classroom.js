@@ -37,7 +37,10 @@ const Classroom = ({ token, user }) => {
         method: "POST",
         body: JSON.stringify(classAttributes),
       };
-      const response = await fetch("/api/classrooms/create", options);
+      const response = await fetch(
+        "https://tranquil-woodland-86159.herokuapp.com/api/classrooms/create",
+        options
+      );
       const jsonResponse = await response.json();
       if (jsonResponse.success) {
         setIsCreating(false);
@@ -51,24 +54,16 @@ const Classroom = ({ token, user }) => {
   const handleDeleteClass = async (classroom) => {
     try {
       if (window.confirm("Are you sure you want to Delete this class?")) {
-        const classBody = {
-          className: classroom.className,
-          classDescription: classroom.classDescription,
-          classSubject: classroom.classSubject,
-          affiliatedInstitution: classroom.affiliatedInstitution,
-        };
-
         const options = {
           headers: {
             "content-type": "application/json",
             "auth-token": token,
           },
           method: "DELETE",
-          // body: JSON.stringify(classBody),
         };
 
         const response = await fetch(
-          `/api/classrooms/delete/${classroom._id}`,
+          `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/delete/${classroom._id}`,
           options
         );
         const jsonResponse = await response.json();
@@ -92,7 +87,10 @@ const Classroom = ({ token, user }) => {
           "auth-token": token,
         },
       };
-      const response = await fetch(`/api/classrooms/user/${user._id}`, options);
+      const response = await fetch(
+        `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/user/${user._id}`,
+        options
+      );
       const jsonResponse = await response.json();
       if (!response.ok) throw jsonResponse.error;
       setAttendingClassrooms(jsonResponse.classesAttending);
@@ -119,7 +117,10 @@ const Classroom = ({ token, user }) => {
           method: "POST",
           body: JSON.stringify(classAttributes),
         };
-        const response = await fetch("/api/classrooms/request", options);
+        const response = await fetch(
+          "https://tranquil-woodland-86159.herokuapp.com/api/classrooms/request",
+          options
+        );
         const jsonResponse = await response.json();
         if (jsonResponse.Success) {
           setIsJoining(false);

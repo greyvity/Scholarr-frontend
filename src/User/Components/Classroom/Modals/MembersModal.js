@@ -27,33 +27,10 @@ const MembersModal = ({
 }) => {
   const [members, setMembers] = useState([]);
 
-  const handleAcceptInvite = async (e, userId) => {
-    e.preventDefault();
-    try {
-      const options = {
-        headers: {
-          "content-type": "application/json",
-          "auth-token": token,
-        },
-      };
-      const response = await fetch(
-        `/api/classrooms/${classId}/accept_request/${userId}`,
-        options
-      );
-      const jsonResponse = await response.json();
-      if (jsonResponse.Success) {
-        setShowModal(false);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const handleGetUsers = useCallback(async () => {
     try {
       const users = classDetails?.classMembers?.enrolledMembers;
       if (users) {
-        console.log(classDetails.classMembers);
         const options = {
           headers: {
             "content-type": "application/json",
@@ -64,13 +41,13 @@ const MembersModal = ({
             userGroup: users,
           }),
         };
-        console.log(options);
 
-        const response = await fetch(`/api/users/group_users`, options);
-        console.log(response);
+        const response = await fetch(
+          `https://tranquil-woodland-86159.herokuapp.com/api/users/group_users`,
+          options
+        );
         const jsonResponse = await response.json();
-        console.log(jsonResponse);
-        //   setMembers(jsonResponse);
+        setMembers(jsonResponse);
       }
     } catch (error) {
       console.log(error);
@@ -95,16 +72,19 @@ const MembersModal = ({
           <motion.div className="modal" variants={modal}>
             <h1 className="modal-heading">Members</h1>
             <div className="display-invites">
+              <div className="invite-container">
+                <li className="invite" style={{ fontWeight: "bold" }}>
+                  Email
+                </li>
+                <li className="invite" style={{ fontWeight: "bold" }}>
+                  Username
+                </li>
+              </div>
               {members &&
                 members.map((member) => (
-                  <div className="invite-container" key={member.id}>
+                  <div className="invite-container" key={member._id}>
                     <li className="invite">{member.email}</li>
-                    <h4
-                      className="accept-icon"
-                      onClick={(e) => handleAcceptInvite(e, member.id)}
-                    >
-                      ✔
-                    </h4>
+                    <li className="invite">{member.username}</li>
                   </div>
                 ))}
             </div>

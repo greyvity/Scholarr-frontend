@@ -61,7 +61,7 @@ const YourWorksModal = ({
       };
 
       const response = await fetch(
-        `/api/classrooms/cw/classworks/submissions/user/${user._id}`,
+        `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/cw/classworks/submissions/user/${user._id}`,
         options
       );
       const jsonResponse = await response.json();

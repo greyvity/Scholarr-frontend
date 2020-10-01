@@ -26,7 +26,7 @@ export const addToDo = async ({
     };
 
     const response = await fetch(
-      `/api/users/todo/${user._id}/create_todo`,
+      `https://tranquil-woodland-86159.herokuapp.com/api/users/todo/${user._id}/create_todo`,
       options
     );
     const jsonResponse = await response.json();
@@ -70,7 +70,7 @@ export const editToDo = async ({
     };
 
     const response = await fetch(
-      `/api/users/todo/${user._id}/update_todo/${todoId}`,
+      `https://tranquil-woodland-86159.herokuapp.com/api/users/todo/${user._id}/update_todo/${todoId}`,
       options
     );
     const jsonResponse = await response.json();
@@ -96,7 +96,7 @@ export const deleteToDo = async ({ todoId, token, user }) => {
     };
 
     const response = await fetch(
-      `/api/users/todo/${user._id}/delete_todo/${todoId}`,
+      `https://tranquil-woodland-86159.herokuapp.com/api/users/todo/${user._id}/delete_todo/${todoId}`,
       options
     );
     const jsonResponse = await response.json();

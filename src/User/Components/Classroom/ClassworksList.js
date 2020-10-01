@@ -28,7 +28,7 @@ const ClassworksList = ({
         };
 
         const response = await fetch(
-          `/api/classrooms/cw/${classId}/classworks/delete/${classwork._id}`,
+          `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/cw/${classId}/classworks/delete/${classwork._id}`,
           options
         );
         const jsonResponse = await response.json();
@@ -89,7 +89,7 @@ const ClassworksList = ({
                 key={attachment._id}
                 target="_blank"
                 rel="noopener noreferrer"
-                href={`http://localhost:4000/${attachment.location}`}
+                href={`https://tranquil-woodland-86159.herokuapp.com/${attachment.location}`}
                 className="attachment"
               >
                 {attachment.name}
@@ -119,20 +119,33 @@ const ClassworksList = ({
         </div>
         <div className="classwork-type">
           <h4 className="classwork-type-display">{classwork.classworkType}</h4>
-          <i
-            className="fas fa-pen edit-action"
-            onClick={() => setShowEditClassworksModal(true)}
-          >
-            {" "}
-            Edit
-          </i>
-          <i className="fas fa-trash delete-action" onClick={handleDeleteWork}>
-            {" "}
-            Delete
-          </i>
+          {isTeaching && (
+            <>
+              <i
+                className="fas fa-pen edit-action"
+                onClick={() => setShowEditClassworksModal(true)}
+              >
+                {" "}
+                Edit
+              </i>
+              <i
+                className="fas fa-trash delete-action"
+                onClick={handleDeleteWork}
+              >
+                {" "}
+                Delete
+              </i>
+            </>
+          )}
           {classwork.deadlineDate && (
             <h3 className="due-date">
-              Deadline: 23:59 {classwork.deadlineDate.split("T")[0]}
+              Deadline:
+              {classwork.deadlineDate.split("T")[1].split(":")[0] +
+                ":" +
+                classwork.deadlineDate.split("T")[1].split(":")[1] +
+                " " +
+                " " +
+                classwork.deadlineDate.split("T")[0]}
             </h3>
           )}
         </div>

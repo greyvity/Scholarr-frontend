@@ -27,7 +27,7 @@ const ClassroomExtended = ({ token, match, user, location }) => {
         },
       };
       const response = await fetch(
-        `/api/classrooms/detail/${classId}`,
+        `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/detail/${classId}`,
         options
       );
       const jsonResponse = await response.json();
@@ -40,7 +40,7 @@ const ClassroomExtended = ({ token, match, user, location }) => {
         },
       };
       const classworkResponse = await fetch(
-        `/api/classrooms/cw/${classId}/classworks`,
+        `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/cw/${classId}/classworks`,
         classworkOptions
       );
       const jsonClassworkResponse = await classworkResponse.json();

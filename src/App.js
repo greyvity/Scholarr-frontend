@@ -14,7 +14,6 @@ import LandingNav from "./Landing Page/LandingNav";
 import Calendar from "./User/Components/Calendar/Calendar";
 import CreateTodo from "./User/Components/ToDo/CreateTodo";
 import EditTodo from "./User/Components/ToDo/EditTodo";
-import TodoList from "./User/Components/ToDo/TodoList";
 import Todo from "./User/Components/ToDo/Todo";
 import Register from "./Landing Page/Auth/Register";
 import Profile from "./User/Components/Profile/Profile";

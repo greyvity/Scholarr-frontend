@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import axios from "axios";
 
 const backdrop = {
   visible: { opacity: 1 },
@@ -52,7 +51,7 @@ const EditClassroomModal = ({
         body: JSON.stringify(body),
       };
       const response = await fetch(
-        `/api/classrooms/update/${classroom._id}`,
+        `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/update/${classroom._id}`,
         options
       );
       const jsonResponse = await response.json();
@@ -80,6 +79,7 @@ const EditClassroomModal = ({
             <h1 style={{ color: "black" }} className="modal-heading">
               EDIT CLASSROOM
             </h1>
+            <h3 className="error-message">{error}</h3>
             <motion.form
               style={{ color: "black" }}
               initial={{ opacity: 0, y: 100 }}

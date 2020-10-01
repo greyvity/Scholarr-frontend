@@ -38,7 +38,7 @@ const InvitesModal = ({
         },
       };
       const response = await fetch(
-        `/api/classrooms/${classId}/accept_request/${userId}`,
+        `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/${classId}/accept_request/${userId}`,
         options
       );
       const jsonResponse = await response.json();
@@ -63,7 +63,10 @@ const InvitesModal = ({
       };
       let tempCollection = [];
       for (let user in users) {
-        const response = await fetch(`/api/users/${users[user]}`, options);
+        const response = await fetch(
+          `https://tranquil-woodland-86159.herokuapp.com/api/users/${users[user]}`,
+          options
+        );
         const jsonResponse = await response.json();
         tempCollection = [...tempCollection, { ...jsonResponse }];
       }

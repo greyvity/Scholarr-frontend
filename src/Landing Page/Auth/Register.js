@@ -23,11 +23,12 @@ const Register = () => {
 
       try {
         const response = await fetch(
-          "http://localhost:4000/api/auth/register",
+          "https://tranquil-woodland-86159.herokuapp.com/api/auth/register",
           options
         );
         if (response.ok) {
           const jsonResponse = await response.json();
+          console.log(jsonResponse);
           window.alert("Please check your mail for the verification code.");
         } else {
           window.alert("something went wrong");
@@ -54,7 +55,7 @@ const Register = () => {
               <path
                 d="M16.0357 6C16.0357 8.56954 13.837 10.75 11 10.75C8.16304 10.75 5.96429 8.56954 5.96429 6C5.96429 3.43046 8.16304 1.25 11 1.25C13.837 1.25 16.0357 3.43046 16.0357 6ZM11 15.5C12.3589 15.5 13.6552 15.2297 14.833 14.75H15.4C18.4088 14.75 20.75 17.0664 20.75 19.8V21.75C20.75 22.2477 20.3093 22.75 19.6429 22.75H2.35714C1.69072 22.75 1.25 22.2477 1.25 21.75V19.8C1.25 17.0664 3.59117 14.75 6.6 14.75H7.16782C8.34762 15.2291 9.63953 15.5 11 15.5Z"
                 stroke="black"
-                stroke-width="2.5"
+                strokeWidth="2.5"
               />
             </svg>
           </label>
