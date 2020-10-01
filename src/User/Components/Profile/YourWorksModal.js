@@ -93,8 +93,8 @@ const YourWorksModal = ({
             <div className="your-works">
               <div className="your-work">
                 <h3>Submission Attachment</h3>
+                <h3 className="feedback">Description</h3>
                 <h3 className="grades">Grades</h3>
-                {/* <h3 className="feedback">Feedback</h3> */}
               </div>
               {submissions.map((submission) => (
                 <div key={submission.submission._id} className="your-work">
@@ -104,12 +104,12 @@ const YourWorksModal = ({
                   >
                     {submission.submission.attachments[0]?.name}
                   </a>
+                  <h3 className="feedback">
+                    {submission.submission.description || "-"}
+                  </h3>
                   <h3 className="grades">
                     {submission.submission.obtainedGrade || "-"}
                   </h3>
-                  {/* <h3 className="feedback">
-                    {submission.submission.feedback || "-"}
-                  </h3> */}
                 </div>
               ))}
             </div>
