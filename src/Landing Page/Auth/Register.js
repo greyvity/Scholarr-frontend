@@ -31,7 +31,9 @@ const Register = ({ isLoading, setIsLoading }) => {
         if (response.ok) {
           const jsonResponse = await response.json();
           console.log(jsonResponse);
-          window.alert("Please check your mail for the verification code.");
+          window.alert(
+            `We have sent a verification email to ${email}. Please click on the link and login.`
+          );
         } else {
           window.alert("something went wrong");
         }
@@ -39,7 +41,7 @@ const Register = ({ isLoading, setIsLoading }) => {
         console.log(err);
       }
     } else {
-      window.alert("Enter Credentials");
+      window.alert("Enter required Credentials to register");
     }
   };
 
