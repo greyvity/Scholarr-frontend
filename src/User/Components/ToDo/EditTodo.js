@@ -74,6 +74,8 @@ export default class EditTodo extends Component {
     });
   }
   async onSubmit(e) {
+    this.props.setIsLoading(true);
+
     e.preventDefault();
     const obj = {
       description: this.state.todo_description,
@@ -97,6 +99,7 @@ export default class EditTodo extends Component {
         `https://tranquil-woodland-86159.herokuapp.com/api/users/todo/${this.props.location.state.user._id}/update_todo/${this.props.match.params.todoId}`,
         options
       );
+      this.props.setIsLoading(false);
 
       if (response.ok) {
         window.alert("Todo Updated");

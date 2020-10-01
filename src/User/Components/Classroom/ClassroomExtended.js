@@ -7,7 +7,7 @@ import ViewYourWorks from "../Profile/YourWorksModal";
 import MembersModal from "./Modals/MembersModal";
 // import Classroom from "./Classroom";
 
-const ClassroomExtended = ({ token, match, user, location }) => {
+const ClassroomExtended = ({ token, match, user, location, setIsLoading }) => {
   const [classDetails, setClassDetails] = useState({});
   const [showYourWorksModal, setShowYourWorksModal] = useState(false);
   const [classworks, setClassworks] = useState([]);
@@ -18,6 +18,7 @@ const ClassroomExtended = ({ token, match, user, location }) => {
   const [code, setCode] = useState("Click to Copy Code");
 
   const extractClassInfo = useCallback(async () => {
+    setIsLoading(true);
     try {
       const classId = match.params.classId;
       const options = {
@@ -43,13 +44,15 @@ const ClassroomExtended = ({ token, match, user, location }) => {
         `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/cw/${classId}/classworks`,
         classworkOptions
       );
+      setIsLoading(false);
+
       const jsonClassworkResponse = await classworkResponse.json();
       setClassworks(jsonClassworkResponse.success.classworks);
     } catch (error) {
       console.log(error);
       window.alert(error);
     }
-  }, [token, match.params.classId]);
+  }, [token, match.params.classId, setIsLoading]);
 
   useEffect(() => {
     extractClassInfo();

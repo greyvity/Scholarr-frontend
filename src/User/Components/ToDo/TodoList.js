@@ -53,6 +53,8 @@ export default class TodosList extends Component {
   }
 
   componentDidMount() {
+    this.props.setIsLoading(true);
+
     const options = {
       headers: {
         "content-type": "application/json",
@@ -71,6 +73,7 @@ export default class TodosList extends Component {
       .catch(function (error) {
         console.log(error);
       });
+    this.props.setIsLoading(false);
   }
 
   // componentDidUpdate() {

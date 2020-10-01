@@ -54,7 +54,7 @@ function App() {
   return (
     <>
       <Router>
-        {isLoading && <Loader setIsLoading={setIsLoading} />}
+        <Loader setIsLoading={setIsLoading} isLoading={isLoading} />
 
         <Modal showModal={showModal} />
         {/* <ClassworkModal showClassworkModal={showClassworkModal} /> */}
@@ -78,7 +78,12 @@ function App() {
                       path="/"
                       exact
                       render={(props) => (
-                        <Classroom token={token} user={user} />
+                        <Classroom
+                          token={token}
+                          user={user}
+                          isLoading={isLoading}
+                          setIsLoading={setIsLoading}
+                        />
                       )}
                     />
                     <Route
@@ -87,6 +92,8 @@ function App() {
                         <ClassroomExtended
                           token={token}
                           {...props}
+                          isLoading={isLoading}
+                          setIsLoading={setIsLoading}
                           user={user}
                         />
                       )}
@@ -95,7 +102,14 @@ function App() {
                     <Route
                       path="/todo"
                       exact
-                      render={(props) => <Todo user={user} token={token} />}
+                      render={(props) => (
+                        <Todo
+                          user={user}
+                          isLoading={isLoading}
+                          setIsLoading={setIsLoading}
+                          token={token}
+                        />
+                      )}
                     />
                     <Route
                       path="/dashboard"
@@ -105,14 +119,26 @@ function App() {
                       path="/todo/create"
                       exact
                       render={(props) => (
-                        <CreateTodo {...props} token={token} user={user} />
+                        <CreateTodo
+                          {...props}
+                          token={token}
+                          isLoading={isLoading}
+                          setIsLoading={setIsLoading}
+                          user={user}
+                        />
                       )}
                     />
                     <Route
                       path="/todo/edit/:todoId"
                       exact
                       render={(props) => (
-                        <EditTodo {...props} token={token} user={user} />
+                        <EditTodo
+                          {...props}
+                          token={token}
+                          isLoading={isLoading}
+                          setIsLoading={setIsLoading}
+                          user={user}
+                        />
                       )}
                     />
                     <Route
@@ -123,6 +149,8 @@ function App() {
                           token={token}
                           user={user}
                           setUser={setUser}
+                          isLoading={isLoading}
+                          setIsLoading={setIsLoading}
                         />
                       )}
                     />
@@ -158,11 +186,29 @@ function App() {
                           setIsLoggedIn={setIsLoggedIn}
                           setShowModal={setShowModal}
                           location={props.location}
+                          isLoading={isLoading}
+                          setIsLoading={setIsLoading}
                         />
                       )}
                     />
-                    <Route path="/aboutus" render={(props) => <About />} />
-                    <Route path="/register" render={(props) => <Register />} />
+                    <Route
+                      path="/aboutus"
+                      render={(props) => (
+                        <About
+                          isLoading={isLoading}
+                          setIsLoading={setIsLoading}
+                        />
+                      )}
+                    />
+                    <Route
+                      path="/register"
+                      render={(props) => (
+                        <Register
+                          isLoading={isLoading}
+                          setIsLoading={setIsLoading}
+                        />
+                      )}
+                    />
                   </Switch>
                 </AnimatePresence>
               )}

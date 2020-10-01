@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import TodoList from "./TodoList";
 
-function Todo({ user, token }) {
+function Todo({ user, token, setIsLoading }) {
   return (
     <motion.div
       exit={{ x: "100vw" }}
@@ -33,7 +33,7 @@ function Todo({ user, token }) {
           </motion.li>
         </ul>
       </nav>
-      <TodoList token={token} user={user} />
+      <TodoList token={token} user={user} setIsLoading={setIsLoading} />
     </motion.div>
   );
 }

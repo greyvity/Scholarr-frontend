@@ -41,6 +41,7 @@ export default class CreateTodo extends Component {
 
   async onSubmit(e) {
     e.preventDefault();
+    this.props.setIsLoading(true);
 
     const newTodo = {
       description: this.state.todo_description,
@@ -63,6 +64,8 @@ export default class CreateTodo extends Component {
       `/api/users/todo/${this.props.user._id}/create_todo`,
       options
     );
+    this.props.setIsLoading(false);
+
     const jsonResponse = await response.json();
     if (jsonResponse.success) {
       this.props.history.push("/todo");

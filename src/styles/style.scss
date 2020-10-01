@@ -96,7 +96,7 @@ a {
       width: 50px;
       height: 50px;
       border-radius: 50%;
-      background-color: rgb(122, 135, 255);
+      background-color: #4f4f4f;
       box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
     }
   }
@@ -714,6 +714,16 @@ i {
 .grades {
   font-size: 18px;
   font-weight: bold;
+}
+
+.your-works {
+  margin-top: 30px;
+}
+
+.your-work {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @import "./landing";

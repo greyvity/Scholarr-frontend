@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ClassroomShortened from "./ClassroomShortened";
 
-const Classroom = ({ token, user }) => {
+const Classroom = ({ token, user, isLoading, setIsLoading }) => {
   /** state variables */
   const [teachingClassrooms, setTeachingClassrooms] = useState();
   const [attendingClassrooms, setAttendingClassrooms] = useState();
@@ -19,6 +19,8 @@ const Classroom = ({ token, user }) => {
   };
 
   const handleSubmitClass = async (e) => {
+    setIsLoading(true);
+
     try {
       e.preventDefault();
       const formData = e.target;
@@ -41,6 +43,8 @@ const Classroom = ({ token, user }) => {
         "https://tranquil-woodland-86159.herokuapp.com/api/classrooms/create",
         options
       );
+      setIsLoading(false);
+
       const jsonResponse = await response.json();
       if (jsonResponse.success) {
         setIsCreating(false);
@@ -52,6 +56,7 @@ const Classroom = ({ token, user }) => {
   };
 
   const handleDeleteClass = async (classroom) => {
+    setIsLoading(true);
     try {
       if (window.confirm("Are you sure you want to Delete this class?")) {
         const options = {
@@ -66,6 +71,7 @@ const Classroom = ({ token, user }) => {
           `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/delete/${classroom._id}`,
           options
         );
+        setIsLoading(false);
         const jsonResponse = await response.json();
         if (jsonResponse.success) {
           getClassData();
@@ -80,6 +86,7 @@ const Classroom = ({ token, user }) => {
   };
 
   const getClassData = useCallback(async () => {
+    setIsLoading(true);
     try {
       const options = {
         headers: {
@@ -91,6 +98,8 @@ const Classroom = ({ token, user }) => {
         `https://tranquil-woodland-86159.herokuapp.com/api/classrooms/user/${user._id}`,
         options
       );
+      setIsLoading(false);
+
       const jsonResponse = await response.json();
       if (!response.ok) throw jsonResponse.error;
       setAttendingClassrooms(jsonResponse.classesAttending);
@@ -99,7 +108,7 @@ const Classroom = ({ token, user }) => {
       console.log(error);
       // window.alert(error.message);
     }
-  }, [token, user._id]);
+  }, [token, user._id, setIsLoading]);
 
   const handleJoinClass = async (e) => {
     try {

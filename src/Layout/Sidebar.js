@@ -35,9 +35,9 @@ const Sidebar = () => {
                 <i className="fas fa-tachometer-alt"></i>
               </div>
             </Link>
-            <Link to="/calendar">
+            <Link to="/">
               <div className="quick-toggle">
-                <i className="fas fa-calendar-alt"></i>
+                <i className="fas fa-chalkboard"></i>
               </div>
             </Link>
             <Link to="/todo">

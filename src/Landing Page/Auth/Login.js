@@ -9,6 +9,7 @@ const Login = ({
   setShowModal,
   location,
   setUser,
+  setIsLoading,
 }) => {
   const [error, setError] = useState({});
 
@@ -25,6 +26,7 @@ const Login = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const email = e.target.email.value;
     const password = e.target.password.value;
 
@@ -45,6 +47,7 @@ const Login = ({
         options
       );
       const jsonResponse = await response.json();
+      setIsLoading(false);
       if (jsonResponse.status === "error") {
         const temp = {};
         temp[jsonResponse.error.location] = {

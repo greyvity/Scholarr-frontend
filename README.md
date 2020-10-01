@@ -12,6 +12,13 @@ _Note: Make sure to execute the script from the client directory_
 
 Changelogs:
 
+# v.1.0.0
+
+    1. Classroom Implemented.
+    2. Animations Added
+
+_Known Issues And Bugs: 1. Need to refresh after Login._
+
 # v.0.0.1
 
     1. Landing Page and User pages implemented

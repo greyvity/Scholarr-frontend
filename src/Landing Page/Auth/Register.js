@@ -1,9 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const Register = () => {
+const Register = ({ isLoading, setIsLoading }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const email = e.target.email.value;
     const password = e.target.password.value;
     const username = e.target.username.value;
@@ -26,6 +27,7 @@ const Register = () => {
           "https://tranquil-woodland-86159.herokuapp.com/api/auth/register",
           options
         );
+        setIsLoading(false);
         if (response.ok) {
           const jsonResponse = await response.json();
           console.log(jsonResponse);
