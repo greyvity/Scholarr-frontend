@@ -111,9 +111,12 @@ const ClassworksList = ({
               classwork.classworkType !== "Generic" && (
                 <h3
                   className="submission"
+                  style={{ cursor: "pointer" }}
                   onClick={() => setShowSubmissionModal(true)}
                 >
-                  Make Submission
+                  {classwork.submissions.length === 0
+                    ? "ADD SUBMISSION"
+                    : "EDIT SUBMISSION"}
                 </h3>
               )}
         </div>

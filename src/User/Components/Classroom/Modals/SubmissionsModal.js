@@ -131,6 +131,9 @@ const SubmissionsListModal = ({
                     >
                       {submission.attachments[0]?.name}
                     </a>
+                    {submission.description && (
+                      <p style={{ fontSize: 20 }}>{submission.description}</p>
+                    )}
                     <input
                       type="number"
                       name="grades"
