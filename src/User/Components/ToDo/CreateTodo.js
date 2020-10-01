@@ -61,7 +61,7 @@ export default class CreateTodo extends Component {
     };
 
     const response = await fetch(
-      `/api/users/todo/${this.props.user._id}/create_todo`,
+      `http://tranquil-woodland-86159.herokuapp.com/api/users/todo/${this.props.user._id}/create_todo`,
       options
     );
     this.props.setIsLoading(false);

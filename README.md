@@ -14,8 +14,15 @@ Changelogs:
 
 # v.1.0.0
 
+    1. Todo request corrected.
+    2. Bug fixes.
+
+_Known Issues And Bugs: 1. Need to refresh after Login._
+
+# v.1.0.0
+
     1. Classroom Implemented.
-    2. Animations Added
+    2. Animations Added.
 
 _Known Issues And Bugs: 1. Need to refresh after Login._
 

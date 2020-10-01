@@ -22,12 +22,14 @@ const Profile = ({ user, token, setUser }) => {
     try {
       const profileDetails = {
         firstName: firstName || user.firstName,
-        middleName: middleName,
         lastName: lastName || user.lastName,
         bio: bio || user.bio,
         dateOfBirth: dob || user.dob,
         password,
       };
+
+      if (middleName) profileDetails["middleName"] = middleName;
+
       const options = {
         headers: {
           "content-type": "application/json",

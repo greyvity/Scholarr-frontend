@@ -31,24 +31,28 @@ const Sidebar = () => {
             className="hide-show"
           >
             <Link to="/dashboard">
-              <div className="quick-toggle dashboard">
+              <div title="Dashboard" className="quick-toggle dashboard">
                 <i className="fas fa-tachometer-alt"></i>
               </div>
             </Link>
             <Link to="/">
-              <div className="quick-toggle">
+              <div title="Classroom" className="quick-toggle">
                 <i className="fas fa-chalkboard"></i>
               </div>
             </Link>
             <Link to="/todo">
-              <div className="quick-toggle">
+              <div title="Todo" className="quick-toggle">
                 <i className="fas fa-sticky-note"></i>
               </div>
             </Link>
           </motion.div>
         )}
       </AnimatePresence>
-      <motion.div className="quick-toggle" onClick={handleToggleOpener}>
+      <motion.div
+        title="Hide bar"
+        className="quick-toggle"
+        onClick={handleToggleOpener}
+      >
         {/* <motion.svg
           width="20"
           height="25"
