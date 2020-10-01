@@ -114,9 +114,7 @@ const ClassworksList = ({
                   style={{ cursor: "pointer" }}
                   onClick={() => setShowSubmissionModal(true)}
                 >
-                  {classwork.submissions.length === 0
-                    ? "ADD SUBMISSION"
-                    : "EDIT SUBMISSION"}
+                  YOUR SUBMISSION
                 </h3>
               )}
         </div>
